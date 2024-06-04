@@ -41,8 +41,11 @@ set nobackup
 " Do not let cursor scroll below or above N number of lines when scrolling.
 set scrolloff=10
 " Do not wrap lines. Allow long lines to extend as far as the line goes.
-set nowrap
-
+set wrap
+" usaved changes are not discarded when the file is abandoned(not the active
+" in any buffer, window, or tab, and can only be viewed when buffers are
+" listed)
+set hidden
 " While searching though a file incrementally highlight matching characters as you type.
 set incsearch
 " Ignore capital letters during search.
