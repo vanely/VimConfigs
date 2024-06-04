@@ -40,6 +40,11 @@ Modifying text case:
   - single word toUpperCase: veU
   - Single word toLowerCase: veu
 
+"----------------------------------------------------------"
+Searching:
+:%s/word/replacement/g "replace all instances in file"
+:<start>,<end>s/word/replacement/g "replace all within a span of lines"
+  - EX - :6,10s/someVarName/SomeOtherVarName/g
 "========================================================="
 "BUFFERS"
 List active buffers: "will show buffer ids, can be used for selecting and deleting"
