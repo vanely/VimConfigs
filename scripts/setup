@@ -1,18 +1,25 @@
 #!/usr/bin/bash
 
-# check if vim is installed and install if needed
+EXECUTION_CONTEXT=$(pwd)
+source "${EXECUTION_CONTEXT}/helpers/initial-checks.sh"
 
+# check if vim is installed and install if needed
+install_vim
 # check if the following directory tree exists and create it if it doesn't
 # ~/.vim/
 #  - autoload/
 #  - backup/
 #  - colors/
 #  - plugged/
-
+create_vim_directories
 # copy .vimrc config to home directory. If there's one already then rename it, and copy
-
+copy_config_to_home
 # check if vim-plug is installed and install if needed
-
+if [[ "${OSTYPE}" == "linux-gnu" ]] || [[ "${OSTYPE}" == "darwin" ]] || [[ "${OSTYPE}" == "msys" ]]; then
+  install_vim_plug
+else
+  echo "Unsupported operating system. Please install vim manually."
+fi
 # check if theme list is installed and install if needed
-
+install_prefered_themes
 
