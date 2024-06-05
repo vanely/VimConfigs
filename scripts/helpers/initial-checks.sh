@@ -80,13 +80,13 @@ copy_config_to_home() {
 }
 
 install_vim_plug() {
-  VIM_PLUG_PATH="${HOME}/.vim/autoload/plug.vim"
+  VIM_PLUG_PATH="${HOME}/.vim/autoload/"
   VIM_PLUG_URL="https://raw.githubusercontent.com/jungegunn/vim-plug/master/plug.vim"
 
   if [[ -f "${VIM_PLUG_PATH}" ]]; then
     echo "vim-plug is already installed"
   else
-    echo "installing vim-plub..."
+    echo "installing vim-plug..."
 
     # Check if either curl or wget are installed and use to install vim-plug
     if command -v curl >/dev/null 2>&1; then
