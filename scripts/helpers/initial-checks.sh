@@ -80,8 +80,8 @@ copy_config_to_home() {
 }
 
 install_vim_plug() {
-  VIM_PLUG_PATH="${HOME}/.vim/autoload/"
-  VIM_PLUG_URL="https://raw.githubusercontent.com/jungegunn/vim-plug/master/plug.vim"
+  VIM_PLUG_PATH="${HOME}/.vim/autoload/plug.vim"
+  VIM_PLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
   if [[ -f "${VIM_PLUG_PATH}" ]]; then
     echo "vim-plug is already installed"
@@ -104,6 +104,28 @@ install_vim_plug() {
 install_prefered_themes() {
   # -------------------------------------------------------------------------------
   # Add gruvbox theme to vim
+
+  # Checking if Gitbash supports 256 color when running on windows
+  if [[ "${OSTYPE}" == "msys" ]]; then
+  CURRENT_COLOR_RANGE="$(tput colors)"
+    if [[ "${CURRENT_COLOR_RANGE}" == "256" ]]; then
+      echo "Windows Git Bash already supporting 256 colors."
+    else
+      if [[ -f ~/.bashrc ]] && [[ -f ~/.profile ]] ; then
+      echo export TERM=xterm-256color >> ~/.profile
+      echo source ~/.profile >> ~/.bashrc
+      elif [[ -f ~/.bashrc ]] && [[ ! -f ~/.profile ]]; then
+        touch ~/.profile
+        echo export TERM=xterm-256color >> ~/.profile
+        echo source ~/.profile >> ~/.bashrc
+      elif [[ ! -f ~/.bashrc ]] && [[ -f ~/.profile ]]; then
+        touch ~/.bashrc
+        touch ~/.profile
+        echo export TERM=xterm-256color >> ~/.profile
+        echo source ~/.profile >> ~/.bashrc
+      fi
+    fi
+  fi
   GRUVBOX_REPO_URL="https://github.com/morhetz/gruvbox.git"
   THEMES_DIR="${HOME}/vim-themes"
   GRUVBOX_COLORS_DIR="${THEMES_DIR}/gruvbox/colors"
