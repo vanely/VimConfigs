@@ -18,7 +18,8 @@ colorscheme gruvbox
 " colorscheme desert
 
 " we use a dark background, don't we?
-set bg=dark
+" set bg=dark
+set background=dark
 
 " Always show the menu, insert longest match
 set completeopt=menuone,longest
@@ -217,34 +218,48 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
 map 0 ^
+" Reasigning [Alt]+[h,j,k,l] to actually be functional
+execute "set <M-h>=\eh"
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+execute "set <M-l>=\el"
 
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nmap <M-j> mz:m .+1<CR>`z
+nmap <M-k> mz:m .-2<CR>`z
 
+" Visual mode mappings for moving selected lines up or down
+vmap <M-j> :m '>+1<CR>gv=gv
+vmap <M-k> :m '<-2<CR>gv=gv
+
+" macOS-specific mappings
 if has("mac") || has("macunix")
- " nmap <D-j> <M-j>
- " nmap <D-k> <M-k>
- " vmap <D-j> <M-j>
- " vmap <D-k> <M-k>
-  
-  inoremap ª <Esc>:m .+1<CR>==gi
-  inoremap º <Esc>:m .-2<CR>==gi
-  nnoremap ª :m .+1<CR>==
-  nnoremap º :m .-2<CR>==
-  vnoremap ª :m '>+1<CR>gv=gv
-  vnoremap º :m '<-2<CR>gv=gv
+  " For macOS, map the Cmd key (⌘) to Alt key mappings for consistency
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+
+  " Insert mode mappings for moving a line up or down
+  inoremap <M-j> <Esc>:m .+1<CR>==gi
+  inoremap <M-k> <Esc>:m .-2<CR>==gi
+              
+  " Normal mode mappings for moving a line up or down
+  nnoremap <M-j> :m .+1<CR>==
+  nnoremap <M-k> :m .-2<CR>==
+                
+  " Visual mode mappings for moving selected lines up
+  " or down
+  vnoremap <M-j> :m '>+1<CR>gv=gv
+  vnoremap <M-k> :m '<-2<CR>gv=gv
 endif
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  silent! %s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
 endfun
 
 if has("autocmd")
