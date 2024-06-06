@@ -65,7 +65,7 @@ copy_config_to_home() {
   if [[ -f "${HOME}/.vimrc" ]]; then
     RANDOM_CHAR="$(generate_random_char)"
 
-    # Rename the existing .vimrc ile
+    # Rename the existing .vimrc file
     echo "Renaming existing .vimrc to .vimrc_${RANDOM_CHAR}"
     mv "${HOME}/.vimrc" "${HOME}/.vimrc_${RANDOM_CHAR}"
   fi
