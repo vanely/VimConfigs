@@ -21,10 +21,18 @@ Split horizontally from bottom and make split a terminal:
 
 "----------------------------------------------------------"
 Split vertically:
-[ctrl]+[w], [s]
+[ctrl]+[w], [v]
 :vsplit
 :vsp
 :vs
+
+"========================================================="
+"TABS"
+List active tabs:
+:tabs
+
+Select specific tab:
+:tagn<num>
 
 "========================================================="
 "EDITING FILES"

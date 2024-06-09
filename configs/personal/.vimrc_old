@@ -133,11 +133,6 @@ call plug#end()
 " MAPPINGS ---------------------------------------------------------------- {{{
 
 """"""""""""""""""""""""""""""
-" => Plugin mappings
-""""""""""""""""""""""""""""""
-map <C-S-e> :NERDTreeToggle<CR>
-
-""""""""""""""""""""""""""""""
 " => Insert mode related
 """"""""""""""""""""""""""""""
 let mapleader = ","
@@ -165,12 +160,6 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
-" Faster split sizing
-map <C-Left> <C-W><
-map <C-Right> <C-W>>
-map <C-Up> <C-W>+
-map <C-Down> <C-W>-
-
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -191,7 +180,7 @@ map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-map <leader>t :execute 'tabn ' . ChangeTab()<cr>
+map <leader>t :tabnext<cr>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -307,7 +296,6 @@ map <leader>pp :setlocal paste!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -356,14 +344,5 @@ function! VisualSelection(direction, extra_filter) range
 
     let @/ = l:pattern
     let @" = l:saved_reg
-endfunction
-
-function! ChangeTab()  
-  let tab_number = input('Enter tab num: ')
-  if tab_number =~ '^\d\+$'
-    return tab_number
-  else
-    return ''
-  endif
 endfunction
 " }}}
