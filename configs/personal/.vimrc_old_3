@@ -130,11 +130,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'dense-analysis/ale'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
-  Plug 'vim-syntastic/syntastic'
-  Plug 'mileszs/ack.vim'
-  Plug 'itchyny/lightline.vim'
-  Plug 'frazrepo/vim-rainbow'
-  Plug 'tpope/vim-surround'
   Plug 'preservim/nerdtree'
   Plug 'rust-lang/rust.vim'
 
@@ -149,96 +144,12 @@ call plug#end()
 """"""""""""""""""""""""""""""
 "--------------------------------------fzf---------------------------------"
 "let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
-"--------------------------------------------------------------------------"
-
-"--------------------------------------ack---------------------------------"
-let g:ackprg = 'ack --vimgrep'
-let g:ack_use_location_list = 1
-let g:ack_ignore_dir = ['node_modules', '.git']
-"--------------------------------------------------------------------------"
-
-"----------------------------------Syntastic-------------------------------"
-" Syntastic configuration
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" Language checkers
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_python_checkers = ['flake8']
-"--------------------------------------------------------------------------"
-
-"------------------------------------Tabline-------------------------------"
-let g:lightline = {
-  \   'colorscheme': 'Gruvbox',
-  \   'active': {
-  \     'left':[ [ 'mode', 'paste' ],
-  \              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
-  \     ]
-  \   },
-	\   'component': {
-	\     'lineinfo': ' %3l:%-2v',
-	\   },
-  \   'component_function': {
-  \     'gitbranch': 'fugitive#head',
-  \   }
-  \ }
-let g:lightline.separator = {
-	\   'left': '', 'right': ''
-  \}
-let g:lightline.subseparator = {
-	\   'left': '', 'right': '' 
-  \}
-let g:lightline.tabline = {
-  \   'left': [ ['tabs'] ],
-  \   'right': [ ['close'] ]
-  \ }
-set showtabline=2  " Show tabline
-set guioptions-=e  " Don't use GUI tabline
-"--------------------------------------------------------------------------"
-
-"----------------------------------Vim-rainbow-----------------------------"
-au FileType c,cpp,objc,objcpp call rainbow#load()
-let g:rainbow_active = 1
-
-let g:rainbow_load_separately = [
-    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
-    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
-    \ [ '*.css' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.scss' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.js' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.ts' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.go' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.rs' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.vim' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.sh' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ ]
-
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
-let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
-"--------------------------------------------------------------------------"
-""""""""""""""""""""""""""""""
-" => Plugin mappings
-""""""""""""""""""""""""""""""
-
-"--------------------------------------fzf---------------------------------"
 nnoremap <leader>f :call GlobalSearch()<CR>
 "--------------------------------------------------------------------------"
 
-"--------------------------------------ack---------------------------------"
-" Map :Ack command to <leader>a
-nnoremap <leader>a :Ack<space>
-" Map :Ack to search for the word under the cursor
-nnoremap <leader>aw :Ack <C-R><C-W><CR>
-" Map :Ack to search in the current working directory
-nnoremap <leader>ac :Ack -H .<CR>
-" Map :Ack to search in the current file's directory
-nnoremap <leader>ad :Ack -H %:h<CR>
-"--------------------------------------------------------------------------"
-
+""""""""""""""""""""""""""""""
+" => Plugin mappings
+""""""""""""""""""""""""""""""
 "-----------------------------------NERDTree-------------------------------"
 map <C-S-e> :NERDTreeToggle<CR>
 map <C-p> :Files<CR>

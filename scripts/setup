@@ -6,6 +6,7 @@ source "${EXECUTION_CONTEXT}/helpers/dependencies/deps.sh"
 
 # -----------------------Dependencies---------------------
 install_ripgrep
+install_ack-grep
 # --------------------------------------------------------
 # check if vim is installed and install if needed
 install_vim
