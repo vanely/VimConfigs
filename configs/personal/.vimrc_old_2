@@ -89,9 +89,6 @@ set hlsearch
 set history=100
 " How many tenths of a second to blink when matching brackets
 set mat=2
-
-"set gh=git\ grep\ vimgrep\ -n
-
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
@@ -125,13 +122,9 @@ endfunction
 
 call plug#begin('~/.vim/plugged')
 
-  Plug 'neoclide/coc.vim', { 'branch': 'release' } 
   Plug 'chriskempson/base16-vim'
   Plug 'dense-analysis/ale'
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
   Plug 'preservim/nerdtree'
-  Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -140,20 +133,9 @@ call plug#end()
 " MAPPINGS ---------------------------------------------------------------- {{{
 
 """"""""""""""""""""""""""""""
-" => Plugin configs
-""""""""""""""""""""""""""""""
-"--------------------------------------fzf---------------------------------"
-"let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
-nnoremap <leader>f :call GlobalSearch()<CR>
-"--------------------------------------------------------------------------"
-
-""""""""""""""""""""""""""""""
 " => Plugin mappings
 """"""""""""""""""""""""""""""
-"-----------------------------------NERDTree-------------------------------"
 map <C-S-e> :NERDTreeToggle<CR>
-map <C-p> :Files<CR>
-"--------------------------------------------------------------------------"
 
 """"""""""""""""""""""""""""""
 " => Insert mode related
@@ -383,44 +365,5 @@ function! ChangeTab()
   else
     return ''
   endif
-endfunction
-
-function! MergeTab()
-  let bufnums = tabpagebuflist()
-  hide tabclose
-  vsplit
-  for n in bufnums
-    execute 'sbuffer ' . n
-    wincmd _
-  endfor
-  wincmd t
-  quit
-  wincmd =
-endfunction
-
-" Work In Progress
-function! GlobalSearch()
-  " Use ripgrep to search for the input pattern, and pipe the results to fzf 
-  let l:search_term = input('<token> <file.extension>: ')
-  if empty(l:search_term)
-    return
-  endif
-  " Execute the search and use fzf to filter the results
-  let l:results = system('rg --vimgrep --smart-case '.shellescape(l:search_term))
-  " If there are no results, print a message and return
-  if empty(l:results)
-    echo "No results found for '".l:search_term."'"
-    return
-  endif
-  " Use fzf to select from the results
-  let l:selection = split(system('echo '.shellescape(l:results).' | fzf --ansi --preview "bat --color=always --line-range :30 {}"'))
-  " If no selection is made, return
-  if empty(l:selection)
-    return
-  endif
-  " Parse the selected result and open the file at the specified line
-  let l:file = l:selection[0]
-  let l:line = l:selection[1]
-  execute 'e+' . l:line . ' ' . l:file
 endfunction
 " }}}
