@@ -1,0 +1,14 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+copy_config_to_home	scripts/helpers/initial-checks.sh	/^copy_config_to_home() {$/;"	f
+create_vim_directories	scripts/helpers/initial-checks.sh	/^create_vim_directories() {$/;"	f
+generate_random_char	scripts/helpers/initial-checks.sh	/^generate_random_char() {$/;"	f
+install_homebrew	scripts/helpers/initial-checks.sh	/^install_homebrew() {$/;"	f
+install_prefered_themes	scripts/helpers/initial-checks.sh	/^install_prefered_themes() {$/;"	f
+install_ripgrep	scripts/helpers/dependencies/deps.sh	/^install_ripgrep() {$/;"	f
+install_vim	scripts/helpers/initial-checks.sh	/^install_vim() {$/;"	f
+install_vim_plug	scripts/helpers/initial-checks.sh	/^install_vim_plug() {$/;"	f

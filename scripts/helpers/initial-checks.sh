@@ -1,8 +1,79 @@
 #!/usr/bin/bash
 
 install_homebrew() {
-  echo "Preparing to install brew package manager"
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  if ! command -v brew &> /dev/null; then
+    echo "Preparing to install brew package manager"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+}
+
+install_scoop() {
+  if ! command -v scoop &> /dev/null; then
+    echo "Installing scoop windows package manager..."
+    powershell scoop_install.ps1
+  fi
+}
+
+install_ripgrep() {
+  if [[ -n "$(which ripgrep)" ]]; then
+    echo "ripgrep is already installed on this machine."
+    echo "---------------------------------------------"
+    echo
+  else
+    echo "Installing ripgrep..."
+    echo "---------------------------------------------"
+    echo
+    if [[ "${OSTYPE}" == "linux-gnu" ]]; then
+      # install for linux(ubuntu/debian)
+      sudo apt update -y
+      sudo apt install ripgrep -y
+      echo "---------------------------------------------"
+      echo
+    elif [[ "${OSTYPE}" == "darwin" ]]; then
+      # install for mac
+      brew install ripgrep
+      echo "---------------------------------------------"
+    elif [[ "${OSTYPE}" == "msys" ]]; then
+      # install for windows(Git Bash)
+      if ! command -v scoop &> /dev/null; then
+        echo "Installing scoop windows package manager..."
+        powershell scoop_install.ps1
+      fi
+      source ~/.bashrc
+      scoop install ripgrep
+      echo "---------------------------------------------"
+      echo "Usupported operating system."
+    fi
+  fi
+}
+
+install_ack-grep() {
+  if [[ -n "$(which ripgrep)" ]]; then
+    echo "ack-grep is already installed on this machine."
+    echo "---------------------------------------------"
+    echo
+  else
+    echo "Installing ack-grep"
+    echo "---------------------------------------------"
+    echo
+    if [[ "${OSTYPE}" == "linux-gnu" ]]; then
+      # install for linux(ubuntu/debian)
+      sudo apt update -y
+      sudo apt install ack-grep -y
+      echo "---------------------------------------------"
+      echo
+    elif [[ "${OSTYPE}" == "darwin" ]]; then
+      # install for mac
+      brew install ack
+      echo "---------------------------------------------"
+    elif [[ "${OSTYPE}" == "msys" ]]; then
+      # install for windows(Git Bash)
+      scoop install ack
+      echo "---------------------------------------------"
+    else
+      echo "Usupported operating system."
+    fi
+  fi
 }
 
 generate_random_char() {
@@ -98,6 +169,27 @@ install_vim_plug() {
       exit 1
     fi
     echo "vim-plug installed successfully."
+  fi
+}
+
+install_ctags() {
+  if [[ "${OSTYPE}" == "darwin" ]]; then
+    if ! command -v brew &> /dev/null; then
+      install_homebrew
+    fi
+    echo "Installing ctags with Homebrew..."
+    brew install ctags
+  elif [[ "${OSTYPE}" == "linux-gnu" ]]; then
+    echo "Updating package list..."
+    sudo apt-get update -y
+    echo "Installing ctags with apt-get..."
+    sudo apt-get install -y ctags
+  elif [[ "${OSTYPE}" == "msys" ]]; then
+    install_scoop
+    echo "Installing ctags with scoop..."
+    scoop install ctags
+  else
+    echo "Unsuported operating system..."
   fi
 }
 

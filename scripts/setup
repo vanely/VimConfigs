@@ -2,9 +2,9 @@
 
 EXECUTION_CONTEXT=$(pwd)
 source "${EXECUTION_CONTEXT}/helpers/initial-checks.sh"
-source "${EXECUTION_CONTEXT}/helpers/dependencies/deps.sh"
 
 # -----------------------Dependencies---------------------
+install_ctags
 install_ripgrep
 install_ack-grep
 # --------------------------------------------------------
