@@ -1,4 +1,20 @@
-#!/usr/bin/bash
+#!/bin/bash
+
+case "${OSTYPE}" in
+  msys)
+    exec /bin/bash "$0" "$@"
+    ;;
+  linux-gnu)
+    exec /bin/bash "$0" "$@"
+    ;;
+  darwin)
+    exec /usr/local/bin/bash "$0" "$@"
+    ;;
+  *)
+    echo "Unsupported operating system."
+    exit 1
+    ;;
+esac
 
 EXECUTION_CONTEXT=$(pwd)
 source "${EXECUTION_CONTEXT}/helpers/initial-checks.sh"
