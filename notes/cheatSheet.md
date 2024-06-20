@@ -81,3 +81,14 @@ List registers:
 :reg
 
 "registers are [0 - 9]: normal copy slots, [+]: this register can be used to copy from inside to outside of vim and vice versa"
+"=============================================================================================================================="
+" Favorite Motions "
+"=============================================================================================================================="
+
+"--------------------------------------------------------"
+Bulk replace in file
+*           to do a file wide search for word being hovered over
+<Shift-n>   to go back to previous match
+c,g,n       to change the searched token at the cursor to something new
+jj          to escape
+n,.         to go to next find, and replay the motion
