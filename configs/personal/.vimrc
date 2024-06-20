@@ -300,6 +300,9 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t :execute 'tabn ' . ChangeTab()<cr>
 
+" IDE like search
+nnoremap <silent> <leader>f :call OpenSearchPopup()<CR>
+
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <leader>tl :exe "tabn ".g:lasttab<CR>
@@ -370,6 +373,8 @@ if has("mac") || has("macunix")
   vnoremap <M-j> :m '>+1<CR>gv=gv
   vnoremap <M-k> :m '<-2<CR>gv=gv
 endif
+
+nnoremap gd <C-]><CR>
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
@@ -497,8 +502,8 @@ function! GlobalSearch()
   " Execute the search and use fzf to filter the results
   let l:results = system('rg --vimgrep --smart-case '.shellescape(l:search_term))
   " If there are no results, print a message and return
-  if empty(l:results)
     echo "No results found for '".l:search_term."'"
+  if empty(l:results)
     return
   endif
   " Use fzf to select from the results
@@ -512,4 +517,61 @@ function! GlobalSearch()
   let l:line = l:selection[1]
   execute 'e+' . l:line . ' ' . l:file
 endfunction
+
+" make this popup where file searches are performed(it should have the same
+" functionality as when / is pressed in normal mode
+" bring cursor focus to the popup box
+" position popup box to top right of current buffer
+" allow input for search token, and tab press to input for global replace on enter
+" when enter is pressed and then searched words have been replace with the new one, use the logic of ClosePopup to close the search popup box 
+
+" function! OpenSearchPopup()
+"     let text = ['Enter search term:']
+"     let options = {
+"         \ 'line': 1,
+"         \ 'col': '100%',
+"         \ 'minwidth': 40,
+"         \ 'minheight': 5,
+"         \ 'border': [],
+"         \ 'padding': [0, 1, 0, 1],
+"         \ 'highlight': 'PopupNormal',
+"         \ 'zindex': 10,
+"         \ 'mappings': 'insert',
+"         \ 'filter': 'PopupFilter',
+"         \ 'callback': function('CloseSearchPopup')
+"         \ }
+"     let winid = popup_create(text, options)
+"     call popup_setoptions(winid, {'callback': function('CloseSearchPopup')})
+"     let g:search_popup_winid = winid
+
+"     " Create input buffer and set it to popup
+"     " let input_bufnr = bufnr('%')
+"     call popup_settext(winid, 'Search: ')
+"     call feedkeys('i')
+" endfunction
+
+" function! CloseSearchPopup(id)
+"     call popup_close(a:id)
+" endfunction
+
+" function! PopupFilter(id, key)
+"     " Get input from user
+"     let input = nr2char(a:key)
+"     if input == "\<Esc>"
+"         call CloseSearchPopup(a:id)
+"     elseif input == "\<CR>"
+"         " Get the current buffer text
+"         let lnum = line('.')
+"         let search_term = getline(lnum)
+"         let search_term = substitute(search_term, 'Search: ', '', '')
+"         call inputsave()
+"         let replace_term = input('Replace with: ')
+"         call inputrestore()
+"         " Perform the search and replace
+"         execute '%s/' . search_term . '/' . replace_term . '/gc'
+"         call CloseSearchPopup(a:id)
+"     endif
+" endfunction
+
+" nnoremap <silent> <leader>p :call OpenSearchPopup()<CR>
 " }}}
