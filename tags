@@ -7,8 +7,11 @@
 copy_config_to_home	scripts/helpers/initial-checks.sh	/^copy_config_to_home() {$/;"	f
 create_vim_directories	scripts/helpers/initial-checks.sh	/^create_vim_directories() {$/;"	f
 generate_random_char	scripts/helpers/initial-checks.sh	/^generate_random_char() {$/;"	f
+install_ctags	scripts/helpers/initial-checks.sh	/^install_ctags() {$/;"	f
 install_homebrew	scripts/helpers/initial-checks.sh	/^install_homebrew() {$/;"	f
 install_prefered_themes	scripts/helpers/initial-checks.sh	/^install_prefered_themes() {$/;"	f
 install_ripgrep	scripts/helpers/dependencies/deps.sh	/^install_ripgrep() {$/;"	f
+install_ripgrep	scripts/helpers/initial-checks.sh	/^install_ripgrep() {$/;"	f
+install_scoop	scripts/helpers/initial-checks.sh	/^install_scoop() {$/;"	f
 install_vim	scripts/helpers/initial-checks.sh	/^install_vim() {$/;"	f
 install_vim_plug	scripts/helpers/initial-checks.sh	/^install_vim_plug() {$/;"	f
