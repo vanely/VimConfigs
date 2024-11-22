@@ -11,6 +11,8 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 250
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -33,7 +35,6 @@ local plugins = {
     name = "sonokai",
     priority = 1000, 
     config = function()
-      -- Sonokai configs
         vim.g.sonokai_style = 'default' -- options: 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
         vim.g.sonokai_better_performance = 1
         vim.g.sonokai_enable_italic = 1
@@ -85,7 +86,7 @@ local plugins = {
           enable = true,
           theme = 'dark',
         },
-        transparent_bg = false,
+        transparent = false,
         brighter_comments = true,
         telescope = {
           style = "classic", -- options: "flat" for flat, "classic" for borders
@@ -96,7 +97,139 @@ local plugins = {
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
     dependencies = { 'nvim-lua/plenary.nvim'},
-  }
+  },
+  {
+    'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', 
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    name = "treesitter",
+    priority = 1000,
+    build = ":TSUpdate",
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        "nvim-treesitter/playground",
+    },
+    config = function()
+        require("nvim-treesitter.configs").setup({
+            -- Core functionality
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+            },
+            indent = { 
+                enable = true 
+            },
+            autotag = { 
+                enable = true 
+            },
+
+            -- Language parsers
+            ensure_installed = {
+                -- Web Development
+                "html", "css", "javascript", "typescript", "tsx", "json", "vue", "svelte",
+                "php", "xml", "graphql", "regex", "scss", "embedded_template",
+                
+                -- Programming Languages
+                "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
+                "swift", "dart", "elixir", "erlang", "haskell", "julia", "scala",
+                
+                -- System/Shell
+                "bash", "fish", "powershell", "perl",
+                
+                -- Configuration/Data
+                "yaml", "toml", "dockerfile", "hcl", "terraform", "cmake",
+                "latex", "bibtex", "make", "ninja",
+                
+                -- Documentation
+                "markdown", "markdown_inline", "rst", "vimdoc",
+                
+                -- Infrastructure/DevOps
+                "dockerfile", "sql",
+                
+                -- Lua Development
+                "lua", "luadoc", "luap",
+                
+                -- Git Related
+                "gitignore", "gitcommit", "git_rebase", "diff",
+            },
+
+            -- Incremental selection
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "gnn",
+                    node_incremental = "grn",
+                    scope_incremental = "grc",
+                    node_decremental = "grm",
+                },
+            },
+
+            -- Text objects configuration
+            textobjects = {
+                select = {
+                    enable = true,
+                    lookahead = true,
+                    keymaps = {
+                        -- Text object mappings
+                        ["af"] = "@function.outer",
+                        ["if"] = "@function.inner",
+                        ["ac"] = "@class.outer",
+                        ["ic"] = "@class.inner",
+                        ["ab"] = "@block.outer",
+                        ["ib"] = "@block.inner",
+                        ["ap"] = "@parameter.outer",
+                        ["ip"] = "@parameter.inner",
+                    },
+                },
+                move = {
+                    enable = true,
+                    set_jumps = true,
+                    goto_next_start = {
+                        ["]f"] = "@function.outer",
+                        ["]c"] = "@class.outer",
+                        ["]b"] = "@block.outer",
+                        ["]p"] = "@parameter.inner",
+                    },
+                    goto_next_end = {
+                        ["]F"] = "@function.outer",
+                        ["]C"] = "@class.outer",
+                    },
+                    goto_previous_start = {
+                        ["[f"] = "@function.outer",
+                        ["[c"] = "@class.outer",
+                        ["[b"] = "@block.outer",
+                        ["[p"] = "@parameter.inner",
+                    },
+                    goto_previous_end = {
+                        ["[F"] = "@function.outer",
+                        ["[C"] = "@class.outer",
+                    },
+                },
+            },
+
+            -- Optional modules
+            playground = {
+                enable = true,
+                disable = {},
+                updatetime = 25,
+                persist_queries = false,
+            },
+            
+            -- Additional modules can be added here
+            rainbow = {
+                enable = true,
+                extended_mode = true,
+                max_file_lines = nil,
+            },
+        })
+
+        -- Additional setup after treesitter is loaded
+        vim.opt.foldmethod = "expr"
+        vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+        vim.opt.foldenable = false  -- Disable folding by default
+    end,
+  },
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
@@ -148,6 +281,55 @@ vim.keymap.set('n', '<leader>p', '"+p', { desc = "Paste from system clipboard" }
 vim.keymap.set('v', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
 
 
+-- Function to convert 4 spaces to 2 spaces
+function convert_four_to_two_spaces()
+    -- Store current cursor position
+    local cursor_pos = vim.fn.getpos('.')
+    
+    -- Store current search pattern
+    local old_search = vim.fn.getreg('/')
+    
+    -- Set the new indentation settings
+    vim.bo.expandtab = true      -- Use spaces instead of tabs
+    vim.bo.tabstop = 4          -- Set how many spaces a tab counts for (reading)
+    vim.bo.softtabstop = 2      -- Set how many spaces a tab counts for (editing)
+    vim.bo.shiftwidth = 2       -- Set how many spaces to use for auto-indent
+    
+    -- Convert all existing indentation
+    vim.cmd([[
+        let view = winsaveview()
+        silent! %s/^\s\+/\=repeat(' ', len(submatch(0))/2)/g
+        call winrestview(view)
+    ]])
+    
+    -- Restore cursor position
+    vim.fn.setpos('.', cursor_pos)
+    
+    -- Restore search pattern
+    vim.fn.setreg('/', old_search)
+    
+    -- Print confirmation
+    print("Converted 4-space indents to 2-space indents")
+end
 
+-- Create a command to call the conversion function
+vim.api.nvim_create_user_command('ConvertToTwoSpaces', function()
+    convert_four_to_two_spaces()
+end, {})
 
- 
+-- Optional: Add a keymap to trigger the conversion
+vim.keymap.set('n', '<leader>i2', convert_four_to_two_spaces, 
+    { noremap = true, silent = true, desc = "Convert 4 spaces to 2 spaces" })
+
+-- Auto-command version to apply to specific filetypes
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "javascript", "typescript", "lua", "yaml", "json" },  -- add your filetypes
+    callback = function()
+        vim.bo.expandtab = true
+        vim.bo.tabstop = 4
+        vim.bo.softtabstop = 2
+        vim.bo.shiftwidth = 2
+        -- Uncomment the next line if you want automatic conversion on file open
+        -- M.convert_four_to_two_spaces()
+    end,
+})
