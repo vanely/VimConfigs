@@ -99,7 +99,11 @@ local plugins = {
     dependencies = { 'nvim-lua/plenary.nvim'},
   },
   {
-    'nvim-treesitter/nvim-treesitter', build = ':TSUpdate', 
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -142,7 +146,7 @@ local plugins = {
                 "latex", "bibtex", "make", "ninja",
                 
                 -- Documentation
-                "markdown", "markdown_inline", "rst", "vimdoc",
+                "markdown", "rst", "vimdoc",
                 
                 -- Infrastructure/DevOps
                 "dockerfile", "sql",
@@ -208,7 +212,7 @@ local plugins = {
                 },
             },
 
-            -- Optional modules
+            -- optional modules
             playground = {
                 enable = true,
                 disable = {},
@@ -216,7 +220,7 @@ local plugins = {
                 persist_queries = false,
             },
             
-            -- Additional modules can be added here
+            -- additional modules can be added here
             rainbow = {
                 enable = true,
                 extended_mode = true,
@@ -224,12 +228,19 @@ local plugins = {
             },
         })
 
-        -- Additional setup after treesitter is loaded
+        -- additional setup after treesitter is loaded
         vim.opt.foldmethod = "expr"
         vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-        vim.opt.foldenable = false  -- Disable folding by default
+        vim.opt.foldenable = false  -- disable folding by default
     end,
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {},
+  }
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
@@ -243,11 +254,32 @@ vim.cmd.colorscheme("catppuccin")
 ----------------------------------------------------------------------------------------------------------------------
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+-- snacks reference and keymaps
+_G.notify = function(msg, level, opts)
+    level = level or "info"
+    opts = opts or {}
+    snacks.notify(msg, level, opts)
+end
+
+-- Example keymaps for managing notifications
+vim.keymap.set("n", "<leader>sn", function()
+    snacks.dismiss_all()
+end, { desc = "Dismiss all notifications" })
+
+vim.keymap.set("n", "<leader>sl", function()
+    snacks.show_log()
+end, { desc = "Show notification log" })
+
+
 -- key maps and re-maps 
 vim.keymap.set('i', 'jj', '<Esc>', { desc = "Exit insert mode with jj" }) 
--- vim.keymap.set('n', 'jj', '<Esc>', { desc = "General escape in normal mode" })
 vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true, desc = "Clear search highlight" })
 
+-- Indentation
+vim.keymap.set('n', '<C-<>', ':<<CR>', { desc = "Remove indent" })
+vim.keymap.set('n', '<C->>', ':><CR>', { desc = "Add indent" })
+ 
 -- save and quit operations
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = "Save file" })
 vim.keymap.set('n', '<leader>q', ':q<CR>', { desc = "Quit" })
@@ -268,11 +300,20 @@ vim.keymap.set('n', '<C-l>', '<C-W>l', { desc = "Move to right window" })
 vim.keymap.set('n', '<C-j>', '<C-W>j', { desc = "Move to bottom window" })
 vim.keymap.set('n', '<C-k>', '<C-W>k', { desc = "Move to window above" })
 
+-- resize window using <ctrl> arrow keys
+vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = "Increase Window Height" })
+vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = "Decrease Window Height" })
+vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = "Decrease Window Width" })
+vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = "Increase Window Width" })
+
 -- file navigation
 vim.keymap.set('n', '<leader>/', ':Telescope live_grep<CR>', { desc = "Search in files" })
 vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { desc = "Find files" })
 vim.keymap.set('n', '<C-f>', ':Telescope buffers<CR>', { desc = "Find buffers" })
 vim.keymap.set('n', '<leader>fh', ':Telescope help_tags', { desc = "Find help" })
+
+-- floating terminal
+vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
 
 -- copy&past improvements
 vim.keymap.set('n', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
@@ -280,56 +321,3 @@ vim.keymap.set('v', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set('n', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
 vim.keymap.set('v', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
 
-
--- Function to convert 4 spaces to 2 spaces
-function convert_four_to_two_spaces()
-    -- Store current cursor position
-    local cursor_pos = vim.fn.getpos('.')
-    
-    -- Store current search pattern
-    local old_search = vim.fn.getreg('/')
-    
-    -- Set the new indentation settings
-    vim.bo.expandtab = true      -- Use spaces instead of tabs
-    vim.bo.tabstop = 4          -- Set how many spaces a tab counts for (reading)
-    vim.bo.softtabstop = 2      -- Set how many spaces a tab counts for (editing)
-    vim.bo.shiftwidth = 2       -- Set how many spaces to use for auto-indent
-    
-    -- Convert all existing indentation
-    vim.cmd([[
-        let view = winsaveview()
-        silent! %s/^\s\+/\=repeat(' ', len(submatch(0))/2)/g
-        call winrestview(view)
-    ]])
-    
-    -- Restore cursor position
-    vim.fn.setpos('.', cursor_pos)
-    
-    -- Restore search pattern
-    vim.fn.setreg('/', old_search)
-    
-    -- Print confirmation
-    print("Converted 4-space indents to 2-space indents")
-end
-
--- Create a command to call the conversion function
-vim.api.nvim_create_user_command('ConvertToTwoSpaces', function()
-    convert_four_to_two_spaces()
-end, {})
-
--- Optional: Add a keymap to trigger the conversion
-vim.keymap.set('n', '<leader>i2', convert_four_to_two_spaces, 
-    { noremap = true, silent = true, desc = "Convert 4 spaces to 2 spaces" })
-
--- Auto-command version to apply to specific filetypes
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "javascript", "typescript", "lua", "yaml", "json" },  -- add your filetypes
-    callback = function()
-        vim.bo.expandtab = true
-        vim.bo.tabstop = 4
-        vim.bo.softtabstop = 2
-        vim.bo.shiftwidth = 2
-        -- Uncomment the next line if you want automatic conversion on file open
-        -- M.convert_four_to_two_spaces()
-    end,
-})
