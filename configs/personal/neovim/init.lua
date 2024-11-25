@@ -35,12 +35,12 @@ local plugins = {
     name = "sonokai",
     priority = 1000, 
     config = function()
-        vim.g.sonokai_style = 'default' -- options: 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
-        vim.g.sonokai_better_performance = 1
-        vim.g.sonokai_enable_italic = 1
-        vim.g.sonokai_transparent_background = 0
-        vim.g.sonokai_diagnostic_virtual_text = 'colored' -- options: 'grey', 'colored', 'highlighted'
-        -- vim.cmd([[colorscheme sonokai]])
+      vim.g.sonokai_style = 'default' -- options: 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
+      vim.g.sonokai_better_performance = 1
+      vim.g.sonokai_enable_italic = 1
+      vim.g.sonokai_transparent_background = 0
+      vim.g.sonokai_diagnostic_virtual_text = 'colored' -- options: 'grey', 'colored', 'highlighted'
+      -- vim.cmd([[colorscheme sonokai]])
     end
   },
   {
@@ -111,135 +111,265 @@ local plugins = {
     priority = 1000,
     build = ":TSUpdate",
     dependencies = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        "nvim-treesitter/playground",
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/playground",
     },
     config = function()
       require("nvim-treesitter.configs").setup({
         -- Core functionality
         highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
+          enable = true,
+          additional_vim_regex_highlighting = false,
         },
         indent = { 
-            enable = true 
+          enable = true 
         },
         autotag = { 
-            enable = true 
+          enable = true 
         },
 
         -- Language parsers
         ensure_installed = {
-            -- Web Development
-            "html", "css", "javascript", "typescript", "tsx", "json", "vue", "svelte",
-            "php", "xml", "graphql", "regex", "scss", "embedded_template",
-            
-            -- Programming Languages
-            "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
-            "elixir", "erlang", "haskell", 
-            
-            -- System/Shell
-            "bash", "fish", "powershell", "perl",
-            
-            -- Configuration/Data
-            "yaml", "toml", "dockerfile", "hcl", "terraform", "cmake",
-            "bibtex", "make", "ninja",
-            
-            -- Documentation
-            "markdown", "rst", "vimdoc",
-            
-            -- Infrastructure/DevOps
-            "dockerfile", "sql",
-            
-            -- Lua Development
-            "lua", "luadoc", "luap",
-            
-            -- Git Related
-            "gitignore", "gitcommit", "git_rebase", "diff",
+          -- Web Development
+          "html", "css", "javascript", "typescript", "tsx", "json", "vue", "svelte",
+          "php", "xml", "graphql", "regex", "scss", "embedded_template",
+
+          -- Programming Languages
+          "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
+          "elixir", "erlang", "haskell", 
+
+          -- System/Shell
+          "bash", "fish", "powershell", "perl",
+
+          -- Configuration/Data
+          "yaml", "toml", "dockerfile", "hcl", "terraform", "cmake",
+          "bibtex", "make", "ninja",
+
+          -- Documentation
+          "markdown", "rst", "vimdoc",
+
+          -- Infrastructure/DevOps
+          "dockerfile", "sql",
+
+          -- Lua Development
+          "lua", "luadoc", "luap",
+
+          -- Git Related
+          "gitignore", "gitcommit", "git_rebase", "diff",
         },
 
         -- Incremental selection
         incremental_selection = {
-            enable = true,
-            keymaps = {
-                init_selection = "gnn",
-                node_incremental = "grn",
-                scope_incremental = "grc",
-                node_decremental = "grm",
-            },
+          enable = true,
+          keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+          },
         },
 
         -- Text objects configuration
         textobjects = {
-            select = {
-                enable = true,
-                lookahead = true,
-                keymaps = {
-                    -- Text object mappings
-                    ["af"] = "@function.outer",
-                    ["if"] = "@function.inner",
-                    ["ac"] = "@class.outer",
-                    ["ic"] = "@class.inner",
-                    ["ab"] = "@block.outer",
-                    ["ib"] = "@block.inner",
-                    ["ap"] = "@parameter.outer",
-                    ["ip"] = "@parameter.inner",
-                },
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              -- Text object mappings
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = "@class.inner",
+              ["ab"] = "@block.outer",
+              ["ib"] = "@block.inner",
+              ["ap"] = "@parameter.outer",
+              ["ip"] = "@parameter.inner",
             },
-            move = {
-                enable = true,
-                set_jumps = true,
-                goto_next_start = {
-                    ["]f"] = "@function.outer",
-                    ["]c"] = "@class.outer",
-                    ["]b"] = "@block.outer",
-                    ["]p"] = "@parameter.inner",
-                },
-                goto_next_end = {
-                    ["]F"] = "@function.outer",
-                    ["]C"] = "@class.outer",
-                },
-                goto_previous_start = {
-                    ["[f"] = "@function.outer",
-                    ["[c"] = "@class.outer",
-                    ["[b"] = "@block.outer",
-                    ["[p"] = "@parameter.inner",
-                },
-                goto_previous_end = {
-                    ["[F"] = "@function.outer",
-                    ["[C"] = "@class.outer",
-                },
+          },
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]f"] = "@function.outer",
+              ["]c"] = "@class.outer",
+              ["]b"] = "@block.outer",
+              ["]p"] = "@parameter.inner",
             },
+            goto_next_end = {
+              ["]F"] = "@function.outer",
+              ["]C"] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[f"] = "@function.outer",
+              ["[c"] = "@class.outer",
+              ["[b"] = "@block.outer",
+              ["[p"] = "@parameter.inner",
+            },
+            goto_previous_end = {
+              ["[F"] = "@function.outer",
+              ["[C"] = "@class.outer",
+            },
+          },
         },
 
         -- optional modules
         playground = {
-            enable = true,
-            disable = {},
-            updatetime = 25,
-            persist_queries = false,
+          enable = true,
+          disable = {},
+          updatetime = 25,
+          persist_queries = false,
         },
-        
+
         -- additional modules can be added here
         rainbow = {
-            enable = true,
-            extended_mode = true,
-            max_file_lines = nil,
+          enable = true,
+          extended_mode = true,
+          max_file_lines = nil,
         },
       })
 
-        -- additional setup after treesitter is loaded
-        vim.opt.foldmethod = "expr"
-        vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-        vim.opt.foldenable = false  -- disable folding by default
+      -- additional setup after treesitter is loaded
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+      vim.opt.foldenable = false  -- disable folding by default
     end,
   },
-  { -- vertical indent markers
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    ---@module "ibl"
-    ---@type ibl.config
-    opts = {},
+  {
+    {
+      "lukas-reineke/indent-blankline.nvim",
+      main = "ibl",
+      event = { "BufReadPost", "BufNewFile" },
+      dependencies = {
+        "HiPhish/rainbow-delimiters.nvim",
+      },
+      config = function()
+        local hooks = require("ibl.hooks")
+        local ibl = require("ibl")
+
+        hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+          vim.api.nvim_set_hl(0, "IblScope", { fg = "#56B6C2" })
+          vim.api.nvim_set_hl(0, "IblIndent", { fg = "#574A63" })
+        end)
+
+        -- Basic indent-blankline setup
+        ibl.setup({
+          scope = {
+            enabled = true,
+            show_start = true,
+            show_end = false,
+            injected_languages = true,
+            priority = 500,
+            highlight = "RainbowDelimiterCyan",
+            include = {
+              node_type = {
+                ["*"] = {
+                  -- Curly brace scopes
+                  "block",
+                  "chunk",
+                  "class_definition",
+                  "function_definition",
+                  "function_declaration",
+                  "function",
+                  "object",
+                  "table",
+                  "dictionary",
+                  -- Bracket scopes
+                  "array",
+                  "list_literal",
+                  "tuple",
+                  "element",
+                  -- HTML/JSX
+                  "jsx_element",
+                  "jsx_self_closing_element",
+                  "tag",
+                  "element",
+                  "tag_self_close",
+                  -- General scopes
+                  "if_statement",
+                  "else_clause",
+                  "elif_clause",
+                  "for_statement",
+                  "while_statement",
+                  "switch_statement",
+                  "case_statement",
+                  "try_statement",
+                  "catch_clause",
+                  -- Additional contexts
+                  "arguments",
+                  "parameters",
+                  "body",
+                }
+              }
+            },
+          },
+          exclude = {
+            filetypes = {
+              "help",
+              "dashboard",
+              "lazy",
+              "mason",
+              "notify",
+              "toggleterm",
+            },
+          }
+        })
+
+        -- Rainbow delimiters setup
+        local rainbow_delimiters = require("rainbow-delimiters")
+
+        vim.g.rainbow_delimiters = {
+          strategy = {
+            [""] = rainbow_delimiters.strategy["global"],
+            vim = rainbow_delimiters.strategy["local"],
+          },
+          query = {
+            [""] = "rainbow-delimiters",
+            lua = "rainbow-blocks",
+          },
+          highlight = {
+            "RainbowDelimiterRed",
+            "RainbowDelimiterYellow",
+            "RainbowDelimiterBlue",
+            "RainbowDelimiterOrange",
+            "RainbowDelimiterGreen",
+            "RainbowDelimiterViolet",
+            "RainbowDelimiterCyan",
+          },
+          blacklist = {
+            "help",
+            "dashboard",
+            "lazy",
+            "mason",
+            "notify",
+            "toggleterm",
+          },
+        }
+
+        -- Set up colors for rainbow delimiters
+        vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
+
+      end,
+    },
+    {
+      "HiPhish/rainbow-delimiters.nvim",
+      event = { "BufReadPost", "BufNewFile" },
+    },
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    config = function() 
+      require('lualine').setup({
+        options = {
+          theme = 'dracula'
+        }
+      })
+    end
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -267,18 +397,18 @@ vim.g.maplocalleader = " "
 -- TODO: snacks lib doesn't seem to be working.
 -- snacks reference and keymaps
 _G.notify = function(msg, level, opts)
-    level = level or "info"
-    opts = opts or {}
-    snacks.notify(msg, level, opts)
+  level = level or "info"
+  opts = opts or {}
+  snacks.notify(msg, level, opts)
 end
 
 -- Example keymaps for managing notifications
 vim.keymap.set("n", "<leader>sn", function()
-    snacks.dismiss_all()
+  snacks.dismiss_all()
 end, { desc = "Dismiss all notifications" })
 
 vim.keymap.set("n", "<leader>sl", function()
-    snacks.show_log()
+  snacks.show_log()
 end, { desc = "Show notification log" })
 
 
@@ -289,11 +419,16 @@ vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true, desc = "Clear search h
 -- indentation
 vim.keymap.set('n', '<C-<>', ':<<CR>', { desc = "Remove indent" })
 vim.keymap.set('n', '<C->>', ':><CR>', { desc = "Add indent" })
- 
--- Global keymaps (outside neo-tree window)
+
+-- global keymaps (outside neo-tree window)
 vim.keymap.set('n', '<leader>ge', '<cmd>Neotree git_status<cr>', { desc = 'Git explorer' })
 vim.keymap.set('n', '<leader>be', '<cmd>Neotree buffers<cr>', { desc = 'Buffer explorer' })
 vim.keymap.set('n', '<leader>fe', '<cmd>Neotree reveal<cr>', { desc = 'Reveal file in explorer' })
+vim.keymap.set('n', '<leader>ce', '<cmd>Neotree close<cr>', { desc = 'Close file explorere' })
+
+-- add keymaps for toggling
+vim.keymap.set("n", "<leader>ti", "<cmd>IndentScopeToggle<CR>", { desc = "Toggle indent scope highlighting" })
+
 
 -- suggestions
 vim.keymap.set('n', '<C-<space>>', '')
