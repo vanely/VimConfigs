@@ -115,118 +115,118 @@ local plugins = {
         "nvim-treesitter/playground",
     },
     config = function()
-        require("nvim-treesitter.configs").setup({
-            -- Core functionality
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-            },
-            indent = { 
-                enable = true 
-            },
-            autotag = { 
-                enable = true 
-            },
+      require("nvim-treesitter.configs").setup({
+        -- Core functionality
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+        },
+        indent = { 
+            enable = true 
+        },
+        autotag = { 
+            enable = true 
+        },
 
-            -- Language parsers
-            ensure_installed = {
-                -- Web Development
-                "html", "css", "javascript", "typescript", "tsx", "json", "vue", "svelte",
-                "php", "xml", "graphql", "regex", "scss", "embedded_template",
-                
-                -- Programming Languages
-                "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
-                "swift", "dart", "elixir", "erlang", "haskell", "julia", "scala",
-                
-                -- System/Shell
-                "bash", "fish", "powershell", "perl",
-                
-                -- Configuration/Data
-                "yaml", "toml", "dockerfile", "hcl", "terraform", "cmake",
-                "latex", "bibtex", "make", "ninja",
-                
-                -- Documentation
-                "markdown", "rst", "vimdoc",
-                
-                -- Infrastructure/DevOps
-                "dockerfile", "sql",
-                
-                -- Lua Development
-                "lua", "luadoc", "luap",
-                
-                -- Git Related
-                "gitignore", "gitcommit", "git_rebase", "diff",
-            },
-
-            -- Incremental selection
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = "gnn",
-                    node_incremental = "grn",
-                    scope_incremental = "grc",
-                    node_decremental = "grm",
-                },
-            },
-
-            -- Text objects configuration
-            textobjects = {
-                select = {
-                    enable = true,
-                    lookahead = true,
-                    keymaps = {
-                        -- Text object mappings
-                        ["af"] = "@function.outer",
-                        ["if"] = "@function.inner",
-                        ["ac"] = "@class.outer",
-                        ["ic"] = "@class.inner",
-                        ["ab"] = "@block.outer",
-                        ["ib"] = "@block.inner",
-                        ["ap"] = "@parameter.outer",
-                        ["ip"] = "@parameter.inner",
-                    },
-                },
-                move = {
-                    enable = true,
-                    set_jumps = true,
-                    goto_next_start = {
-                        ["]f"] = "@function.outer",
-                        ["]c"] = "@class.outer",
-                        ["]b"] = "@block.outer",
-                        ["]p"] = "@parameter.inner",
-                    },
-                    goto_next_end = {
-                        ["]F"] = "@function.outer",
-                        ["]C"] = "@class.outer",
-                    },
-                    goto_previous_start = {
-                        ["[f"] = "@function.outer",
-                        ["[c"] = "@class.outer",
-                        ["[b"] = "@block.outer",
-                        ["[p"] = "@parameter.inner",
-                    },
-                    goto_previous_end = {
-                        ["[F"] = "@function.outer",
-                        ["[C"] = "@class.outer",
-                    },
-                },
-            },
-
-            -- optional modules
-            playground = {
-                enable = true,
-                disable = {},
-                updatetime = 25,
-                persist_queries = false,
-            },
+        -- Language parsers
+        ensure_installed = {
+            -- Web Development
+            "html", "css", "javascript", "typescript", "tsx", "json", "vue", "svelte",
+            "php", "xml", "graphql", "regex", "scss", "embedded_template",
             
-            -- additional modules can be added here
-            rainbow = {
-                enable = true,
-                extended_mode = true,
-                max_file_lines = nil,
+            -- Programming Languages
+            "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
+            "elixir", "erlang", "haskell", 
+            
+            -- System/Shell
+            "bash", "fish", "powershell", "perl",
+            
+            -- Configuration/Data
+            "yaml", "toml", "dockerfile", "hcl", "terraform", "cmake",
+            "bibtex", "make", "ninja",
+            
+            -- Documentation
+            "markdown", "rst", "vimdoc",
+            
+            -- Infrastructure/DevOps
+            "dockerfile", "sql",
+            
+            -- Lua Development
+            "lua", "luadoc", "luap",
+            
+            -- Git Related
+            "gitignore", "gitcommit", "git_rebase", "diff",
+        },
+
+        -- Incremental selection
+        incremental_selection = {
+            enable = true,
+            keymaps = {
+                init_selection = "gnn",
+                node_incremental = "grn",
+                scope_incremental = "grc",
+                node_decremental = "grm",
             },
-        })
+        },
+
+        -- Text objects configuration
+        textobjects = {
+            select = {
+                enable = true,
+                lookahead = true,
+                keymaps = {
+                    -- Text object mappings
+                    ["af"] = "@function.outer",
+                    ["if"] = "@function.inner",
+                    ["ac"] = "@class.outer",
+                    ["ic"] = "@class.inner",
+                    ["ab"] = "@block.outer",
+                    ["ib"] = "@block.inner",
+                    ["ap"] = "@parameter.outer",
+                    ["ip"] = "@parameter.inner",
+                },
+            },
+            move = {
+                enable = true,
+                set_jumps = true,
+                goto_next_start = {
+                    ["]f"] = "@function.outer",
+                    ["]c"] = "@class.outer",
+                    ["]b"] = "@block.outer",
+                    ["]p"] = "@parameter.inner",
+                },
+                goto_next_end = {
+                    ["]F"] = "@function.outer",
+                    ["]C"] = "@class.outer",
+                },
+                goto_previous_start = {
+                    ["[f"] = "@function.outer",
+                    ["[c"] = "@class.outer",
+                    ["[b"] = "@block.outer",
+                    ["[p"] = "@parameter.inner",
+                },
+                goto_previous_end = {
+                    ["[F"] = "@function.outer",
+                    ["[C"] = "@class.outer",
+                },
+            },
+        },
+
+        -- optional modules
+        playground = {
+            enable = true,
+            disable = {},
+            updatetime = 25,
+            persist_queries = false,
+        },
+        
+        -- additional modules can be added here
+        rainbow = {
+            enable = true,
+            extended_mode = true,
+            max_file_lines = nil,
+        },
+      })
 
         -- additional setup after treesitter is loaded
         vim.opt.foldmethod = "expr"
@@ -234,13 +234,22 @@ local plugins = {
         vim.opt.foldenable = false  -- disable folding by default
     end,
   },
-  {
+  { -- vertical indent markers
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     ---@module "ibl"
     ---@type ibl.config
     opts = {},
-  }
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim", -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information 
+    } 
+  },
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
@@ -255,6 +264,7 @@ vim.cmd.colorscheme("catppuccin")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- TODO: snacks lib doesn't seem to be working.
 -- snacks reference and keymaps
 _G.notify = function(msg, level, opts)
     level = level or "info"
@@ -276,10 +286,18 @@ end, { desc = "Show notification log" })
 vim.keymap.set('i', 'jj', '<Esc>', { desc = "Exit insert mode with jj" }) 
 vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true, desc = "Clear search highlight" })
 
--- Indentation
+-- indentation
 vim.keymap.set('n', '<C-<>', ':<<CR>', { desc = "Remove indent" })
 vim.keymap.set('n', '<C->>', ':><CR>', { desc = "Add indent" })
  
+-- Global keymaps (outside neo-tree window)
+vim.keymap.set('n', '<leader>ge', '<cmd>Neotree git_status<cr>', { desc = 'Git explorer' })
+vim.keymap.set('n', '<leader>be', '<cmd>Neotree buffers<cr>', { desc = 'Buffer explorer' })
+vim.keymap.set('n', '<leader>fe', '<cmd>Neotree reveal<cr>', { desc = 'Reveal file in explorer' })
+
+-- suggestions
+vim.keymap.set('n', '<C-<space>>', '')
+
 -- save and quit operations
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = "Save file" })
 vim.keymap.set('n', '<leader>q', ':q<CR>', { desc = "Quit" })
@@ -303,8 +321,8 @@ vim.keymap.set('n', '<C-k>', '<C-W>k', { desc = "Move to window above" })
 -- resize window using <ctrl> arrow keys
 vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = "Increase Window Height" })
 vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = "Decrease Window Height" })
-vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = "Decrease Window Width" })
-vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = "Increase Window Width" })
+vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize -2<cr>', { desc = "Decrease Window Width" })
+vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize +2<cr>', { desc = "Increase Window Width" })
 
 -- file navigation
 vim.keymap.set('n', '<leader>/', ':Telescope live_grep<CR>', { desc = "Search in files" })
