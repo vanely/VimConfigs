@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 --vim.cmd("set expandtab")
 --vim.cmd("set tabstop=2")
 --vim.cmd("set softtabstop=2")
@@ -30,10 +31,10 @@ vim.opt.rtp:prepend(lazypath)
 -- plugins
 local plugins = {
   -- Sonokai theme
-  { 
-    "sainnhe/sonokai", 
+  {
+    "sainnhe/sonokai",
     name = "sonokai",
-    priority = 1000, 
+    priority = 1000,
     config = function()
       vim.g.sonokai_style = 'default' -- options: 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
       vim.g.sonokai_better_performance = 1
@@ -67,10 +68,10 @@ local plugins = {
       vim.g.everforest_transparent_background = 0
       vim.g.everforest_sign_column_background = 'none'
       vim.g.everforest_diagnostic_virtual_text = 'colored'
-      vim.g.everforest_ui_contrast = 'high' -- options: 'low', 'high'
-      vim.g.everforest_show_eob = 1 -- show ~ for empty lines at buffer end
+      vim.g.everforest_ui_contrast = 'high'   -- options: 'low', 'high'
+      vim.g.everforest_show_eob = 1           -- show ~ for empty lines at buffer end
       vim.g.everforest_float_style = 'bright' -- background of floating windows
-      vim.cmd([[colorscheme everforest]])   
+      vim.cmd([[colorscheme everforest]])
     end
   },
   {
@@ -79,10 +80,10 @@ local plugins = {
     priority = 1000,
     config = function()
       require("nordic").setup({
-        theme = 'nordic', -- options 'nordic', 'nord'
+        theme = 'nordic',                 -- options 'nordic', 'nord'
         enable_sidebar_background = true, -- for sidebar elements like NvimTree
-        italic_comments = true, -- italicized comments for emphasis
-        cursorline = { 
+        italic_comments = true,           -- italicized comments for emphasis
+        cursorline = {
           enable = true,
           theme = 'dark',
         },
@@ -95,8 +96,22 @@ local plugins = {
     end
   },
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
-    dependencies = { 'nvim-lua/plenary.nvim'},
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.8',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    config = function()
+      require("telescope").setup({
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {}
+          }
+        }
+      })
+      require("telescope").load_extension("ui-select")
+    end
   },
   {
     'windwp/nvim-autopairs',
@@ -121,11 +136,11 @@ local plugins = {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
-        indent = { 
-          enable = true 
+        indent = {
+          enable = true
         },
-        autotag = { 
-          enable = true 
+        autotag = {
+          enable = true
         },
 
         -- Language parsers
@@ -136,7 +151,7 @@ local plugins = {
 
           -- Programming Languages
           "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
-          "elixir", "erlang", "haskell", 
+          "elixir", "erlang", "haskell",
 
           -- System/Shell
           "bash", "fish", "powershell", "perl",
@@ -231,7 +246,7 @@ local plugins = {
       -- additional setup after treesitter is loaded
       vim.opt.foldmethod = "expr"
       vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-      vim.opt.foldenable = false  -- disable folding by default
+      vim.opt.foldenable = false -- disable folding by default
     end,
   },
   {
@@ -353,7 +368,6 @@ local plugins = {
         vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
         vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
         vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
-
       end,
     },
     {
@@ -363,7 +377,7 @@ local plugins = {
   },
   {
     "nvim-lualine/lualine.nvim",
-    config = function() 
+    config = function()
       require('lualine').setup({
         options = {
           theme = 'dracula'
@@ -377,9 +391,98 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim", -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information 
-    } 
+      "MunifTanjim/nui.nvim",        -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
   },
+  {
+    "williamboman/mason.nvim",
+    config = function()
+      require('mason').setup()
+    end
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require('mason-lspconfig').setup({
+        ensure_installed = {
+          -- lua
+          "lua_ls",
+
+          -- web dev
+          "html",
+          "cssls",
+          "ast_grep",
+          "eslint",
+          "emmet_ls",
+          "jsonls",
+
+          -- python
+          "pyright",
+          "pylyzer",
+
+          -- rust
+          "rust_analyzer",
+
+          -- go
+          "templ",
+
+          -- docker
+          "dockerls",
+          "docker_compose_language_service",
+
+          -- yaml/toml
+          "yamlls",
+          "taplo",
+
+          -- shell
+          "bashls",
+
+          -- markdown
+          "marksman",
+
+          "stylua",
+        },
+        automatic_installation = true,
+      })
+    end
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      local lspconfig = require('lspconfig')
+      lspconfig.lua_ls.setup({})
+      lspconfig.html.setup({})
+      lspconfig.cssls.setup({})
+      lspconfig.ast_grep.setup({})
+      lspconfig.eslint.setup({})
+      lspconfig.emmet_ls.setup({})
+      lspconfig.jsonls.setup({})
+      lspconfig.pyright.setup({})
+      lspconfig.pylyzer.setup({})
+      lspconfig.rust_analyzer.setup({})
+      lspconfig.templ.setup({})
+      lspconfig.dockerls.setup({})
+      lspconfig.docker_compose_language_service.setup({})
+      lspconfig.yamlls.setup({})
+      lspconfig.taplo.setup({})
+      lspconfig.bashls.setup({})
+      lspconfig.marksman.setup({})
+      lspconfig.stylua.setup({})
+    end
+  },
+  { -- wrapper for LSPs
+    "nvimtools/none-ls.nvim",
+    config = function()
+      local null_ls
+      require('null-ls')
+
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.stylua,
+        }
+      })
+    end
+  }
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
@@ -412,9 +515,17 @@ vim.keymap.set("n", "<leader>sl", function()
 end, { desc = "Show notification log" })
 
 
--- key maps and re-maps 
-vim.keymap.set('i', 'jj', '<Esc>', { desc = "Exit insert mode with jj" }) 
+-- key maps and re-maps
+vim.keymap.set('i', 'jj', '<Esc>', { desc = "Exit insert mode with jj" })
 vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true, desc = "Clear search highlight" })
+
+-- lsp keymappings
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to where code artifact is defined" })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "Display available actions to take on code" })
+
+vim.keymap.set('n', '<leader>ed', vim.diagnostic.enable, { desc = "Enable LSP diagnostics" })
+vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format, { desc = "Format current file with linter rules" })
 
 -- indentation
 vim.keymap.set('n', '<C-<>', ':<<CR>', { desc = "Remove indent" })
@@ -442,7 +553,7 @@ vim.keymap.set('n', '<leader>x', ':wq<CR>', { desc = "Save and quit" })
 -- buffer operations
 vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = "Delete buffer" })
 vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = "Next buffer" })
-vim.keymap.set('n', '<leader>h', ':bprevious<CR>',{ desc = "Previous buffer" })
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = "Previous buffer" })
 
 -- window operations
 vim.keymap.set('n', '<leader>vs', ':vsplit<CR>', { desc = "Vertical split" })
@@ -466,11 +577,10 @@ vim.keymap.set('n', '<C-f>', ':Telescope buffers<CR>', { desc = "Find buffers" }
 vim.keymap.set('n', '<leader>fh', ':Telescope help_tags', { desc = "Find help" })
 
 -- floating terminal
-vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
+vim.keymap.set("n", "<leader>fT", function() snacks.terminal() end, { desc = "Terminal (cwd)" })
 
 -- copy&past improvements
 vim.keymap.set('n', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set('n', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
 vim.keymap.set('v', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
-
