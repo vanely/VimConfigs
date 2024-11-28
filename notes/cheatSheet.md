@@ -1,3 +1,10 @@
+"FORTMATTING"
+"========================================================="
+gg "go to top of page"
+v  "enter visual mode to select text"
+G  "go to bottom of page"
+=  "apply global indent rule to selected text"
+
 "WORKING WITH SPLITS
 "========================================================="
 NOTE: splits can also take files, directories and some programs as a param

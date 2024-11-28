@@ -36,13 +36,13 @@ local plugins = {
     name = "sonokai",
     priority = 1000,
     config = function()
-      vim.g.sonokai_style = "default" -- options: 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
+      vim.g.sonokai_style = 'default' -- options: 'default', 'atlantis', 'andromeda', 'shusia', 'maia', 'espresso'
       vim.g.sonokai_better_performance = 1
       vim.g.sonokai_enable_italic = 1
       vim.g.sonokai_transparent_background = 0
-      vim.g.sonokai_diagnostic_virtual_text = "colored" -- options: 'grey', 'colored', 'highlighted'
+      vim.g.sonokai_diagnostic_virtual_text = 'colored' -- options: 'grey', 'colored', 'highlighted'
       -- vim.cmd([[colorscheme sonokai]])
-    end,
+    end
   },
   {
     "catppuccin/nvim",
@@ -54,25 +54,25 @@ local plugins = {
         transparent_background = false,
         term_colors = true,
       })
-    end,
+    end
   },
   {
     "sainnhe/everforest",
     name = "everforest",
     priority = 1000,
     config = function()
-      vim.g.everforest_background = "medium" -- options: 'hard', 'medium(default)', 'soft'
+      vim.g.everforest_background = 'medium' -- options: 'hard', 'medium(default)', 'soft'
       vim.g.everforest_better_performance = 1
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_disable_italic_comment = 0
       vim.g.everforest_transparent_background = 0
-      vim.g.everforest_sign_column_background = "none"
-      vim.g.everforest_diagnostic_virtual_text = "colored"
-      vim.g.everforest_ui_contrast = "high" -- options: 'low', 'high'
-      vim.g.everforest_show_eob = 1        -- show ~ for empty lines at buffer end
-      vim.g.everforest_float_style = "bright" -- background of floating windows
+      vim.g.everforest_sign_column_background = 'none'
+      vim.g.everforest_diagnostic_virtual_text = 'colored'
+      vim.g.everforest_ui_contrast = 'high'   -- options: 'low', 'high'
+      vim.g.everforest_show_eob = 1           -- show ~ for empty lines at buffer end
+      vim.g.everforest_float_style = 'bright' -- background of floating windows
       vim.cmd([[colorscheme everforest]])
-    end,
+    end
   },
   {
     "AlexvZyl/nordic.nvim",
@@ -80,12 +80,12 @@ local plugins = {
     priority = 1000,
     config = function()
       require("nordic").setup({
-        theme = "nordic",             -- options 'nordic', 'nord'
+        theme = 'nordic',                 -- options 'nordic', 'nord'
         enable_sidebar_background = true, -- for sidebar elements like NvimTree
-        italic_comments = true,       -- italicized comments for emphasis
+        italic_comments = true,           -- italicized comments for emphasis
         cursorline = {
           enable = true,
-          theme = "dark",
+          theme = 'dark',
         },
         transparent = false,
         brighter_comments = true,
@@ -93,12 +93,12 @@ local plugins = {
           style = "classic", -- options: "flat" for flat, "classic" for borders
         },
       })
-    end,
+    end
   },
   {
-    "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.8',
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     "nvim-telescope/telescope-ui-select.nvim",
@@ -106,17 +106,17 @@ local plugins = {
       require("telescope").setup({
         extensions = {
           ["ui-select"] = {
-            require("telescope.themes").get_dropdown({}),
-          },
-        },
+            require("telescope.themes").get_dropdown {}
+          }
+        }
       })
       require("telescope").load_extension("ui-select")
-    end,
+    end
   },
   {
-    "windwp/nvim-autopairs",
+    'windwp/nvim-autopairs',
     event = "InsertEnter",
-    config = true,
+    config = true
     -- use opts = {} for passing setup options
     -- this is equivalent to setup({}) function
   },
@@ -132,18 +132,47 @@ local plugins = {
     config = function()
       require("nvim-treesitter.configs").setup({
         -- Core functionality
-        auto_install = true,
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
         indent = {
-          enable = true,
+          enable = true
         },
         autotag = {
-          enable = true,
+          enable = true
         },
-        
+
+        -- Language parsers
+        ensure_installed = {
+          -- Web Development
+          "html", "css", "javascript", "typescript", "tsx", "json", "vue", "svelte",
+          "php", "xml", "graphql", "regex", "scss", "embedded_template",
+
+          -- Programming Languages
+          "python", "rust", "go", "java", "c", "cpp", "c_sharp", "ruby", "kotlin",
+          "elixir", "erlang", "haskell",
+
+          -- System/Shell
+          "bash", "fish", "powershell", "perl",
+
+          -- Configuration/Data
+          "yaml", "toml", "dockerfile", "hcl", "terraform", "cmake",
+          "bibtex", "make", "ninja",
+
+          -- Documentation
+          "markdown", "rst", "vimdoc",
+
+          -- Infrastructure/DevOps
+          "dockerfile", "sql",
+
+          -- Lua Development
+          "lua", "luadoc", "luap",
+
+          -- Git Related
+          "gitignore", "gitcommit", "git_rebase", "diff",
+        },
+
         -- Incremental selection
         incremental_selection = {
           enable = true,
@@ -224,37 +253,28 @@ local plugins = {
     {
       "lukas-reineke/indent-blankline.nvim",
       main = "ibl",
-      --event = { "BufReadPost", "BufNewFile" },
+      event = { "BufReadPost", "BufNewFile" },
       dependencies = {
         "HiPhish/rainbow-delimiters.nvim",
       },
       config = function()
-        local highlight = {
-          "RainbowRed",
-          "RainbowYellow",
-          "RainbowBlue",
-          "RainbowOrange",
-          "RainbowGreen",
-          "RainbowViolet",
-          "RainbowCyan",
-        }
         local hooks = require("ibl.hooks")
+        local ibl = require("ibl")
 
         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-          vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-          vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-          vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-          vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-          vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-          vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-          vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+          vim.api.nvim_set_hl(0, "IblScope", { fg = "#56B6C2" })
+          vim.api.nvim_set_hl(0, "IblIndent", { fg = "#574A63" })
         end)
 
-        vim.g.rainbow_delimiters = { highlight = highlight }
-        require("ibl").setup({
+        -- Basic indent-blankline setup
+        ibl.setup({
           scope = {
-            highlight = highlight,
+            enabled = true,
+            show_start = true,
+            show_end = false,
+            injected_languages = true,
             priority = 500,
+            highlight = "RainbowDelimiterCyan",
             include = {
               node_type = {
                 ["*"] = {
@@ -293,24 +313,77 @@ local plugins = {
                   "arguments",
                   "parameters",
                   "body",
-                },
-              },
+                }
+              }
             },
           },
+          exclude = {
+            filetypes = {
+              "help",
+              "dashboard",
+              "lazy",
+              "mason",
+              "notify",
+              "toggleterm",
+            },
+          }
         })
-        hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+
+        -- Rainbow delimiters setup
+        local rainbow_delimiters = require("rainbow-delimiters")
+
+        vim.g.rainbow_delimiters = {
+          strategy = {
+            [""] = rainbow_delimiters.strategy["global"],
+            vim = rainbow_delimiters.strategy["local"],
+          },
+          query = {
+            [""] = "rainbow-delimiters",
+            lua = "rainbow-blocks",
+          },
+          highlight = {
+            "RainbowDelimiterRed",
+            "RainbowDelimiterYellow",
+            "RainbowDelimiterBlue",
+            "RainbowDelimiterOrange",
+            "RainbowDelimiterGreen",
+            "RainbowDelimiterViolet",
+            "RainbowDelimiterCyan",
+          },
+          blacklist = {
+            "help",
+            "dashboard",
+            "lazy",
+            "mason",
+            "notify",
+            "toggleterm",
+          },
+        }
+
+        -- Set up colors for rainbow delimiters
+        vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
       end,
+    },
+    {
+      "HiPhish/rainbow-delimiters.nvim",
+      event = { "BufReadPost", "BufNewFile" },
     },
   },
   {
     "nvim-lualine/lualine.nvim",
     config = function()
-      require("lualine").setup({
+      require('lualine').setup({
         options = {
-          theme = "dracula",
-        },
+          theme = 'dracula'
+        }
       })
-    end,
+    end
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -318,19 +391,19 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "muniftanjim/nui.nvim",     -- "3rd/image.nvim", -- optional image support in preview window: see `# preview mode` for more information
-    },
+      "MunifTanjim/nui.nvim",        -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
   },
   {
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup()
-    end,
+      require('mason').setup()
+    end
   },
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup({
+      require('mason-lspconfig').setup({
         ensure_installed = {
           -- lua
           "lua_ls",
@@ -366,15 +439,17 @@ local plugins = {
 
           -- markdown
           "marksman",
+
+          "stylua",
         },
         automatic_installation = true,
       })
-    end,
+    end
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
+      local lspconfig = require('lspconfig')
       lspconfig.lua_ls.setup({})
       lspconfig.html.setup({})
       lspconfig.cssls.setup({})
@@ -392,26 +467,22 @@ local plugins = {
       lspconfig.taplo.setup({})
       lspconfig.bashls.setup({})
       lspconfig.marksman.setup({})
-    end,
+      lspconfig.stylua.setup({})
+    end
   },
   { -- wrapper for LSPs
     "nvimtools/none-ls.nvim",
     config = function()
-      local null_ls = require("null-ls")
+      local null_ls
+      require('null-ls')
 
       null_ls.setup({
         sources = {
           null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.prettier,
-          null_ls.builtins.formatting.biome,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.black,
-          null_ls.builtins.formatting.djlint,
-        },
+        }
       })
-    end,
-  },
-  -- auto complete, and snippets
+    end
+  }
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
@@ -443,72 +514,73 @@ vim.keymap.set("n", "<leader>sl", function()
   snacks.show_log()
 end, { desc = "Show notification log" })
 
+
 -- key maps and re-maps
-vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode with jj" })
-vim.keymap.set("n", "<Esc>", ":noh<CR>", { silent = true, desc = "Clear search highlight" })
+vim.keymap.set('i', 'jj', '<Esc>', { desc = "Exit insert mode with jj" })
+vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true, desc = "Clear search highlight" })
 
 -- lsp keymappings
-vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to where code artifact is defined" })
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Display available actions to take on code" })
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to where code artifact is defined" })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "Display available actions to take on code" })
 
-vim.keymap.set("n", "<leader>ed", vim.diagnostic.enable, { desc = "Enable LSP diagnostics" })
-vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, { desc = "Format current file with linter rules" })
+vim.keymap.set('n', '<leader>ed', vim.diagnostic.enable, { desc = "Enable LSP diagnostics" })
+vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format, { desc = "Format current file with linter rules" })
 
--- mason keymaps("i" to install packages within stylua explorer)
-vim.keymap.set("n", "<leader>ma", ":Mason<CR>", { desc = "Open Mason language server explorer" })
+-- indentation
+vim.keymap.set('n', '<C-<>', ':<<CR>', { desc = "Remove indent" })
+vim.keymap.set('n', '<C->>', ':><CR>', { desc = "Add indent" })
 
 -- global keymaps (outside neo-tree window)
-vim.keymap.set("n", "<leader>ge", "<cmd>Neotree git_status<cr>", { desc = "Git explorer" })
-vim.keymap.set("n", "<leader>be", "<cmd>Neotree buffers<cr>", { desc = "Buffer explorer" })
-vim.keymap.set("n", "<leader>fe", "<cmd>Neotree reveal<cr>", { desc = "Reveal file in explorer" })
-vim.keymap.set("n", "<leader>ce", "<cmd>Neotree close<cr>", { desc = "Close file explorere" })
+vim.keymap.set('n', '<leader>ge', '<cmd>Neotree git_status<cr>', { desc = 'Git explorer' })
+vim.keymap.set('n', '<leader>be', '<cmd>Neotree buffers<cr>', { desc = 'Buffer explorer' })
+vim.keymap.set('n', '<leader>fe', '<cmd>Neotree reveal<cr>', { desc = 'Reveal file in explorer' })
+vim.keymap.set('n', '<leader>ce', '<cmd>Neotree close<cr>', { desc = 'Close file explorere' })
 
 -- add keymaps for toggling
 vim.keymap.set("n", "<leader>ti", "<cmd>IndentScopeToggle<CR>", { desc = "Toggle indent scope highlighting" })
 
+
 -- suggestions
-vim.keymap.set("n", "<C-<space>>", "")
+vim.keymap.set('n', '<C-<space>>', '')
 
 -- save and quit operations
-vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file" })
-vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "Quit" })
-vim.keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Force quit all" })
-vim.keymap.set("n", "<leader>x", ":wq<CR>", { desc = "Save and quit" })
+vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = "Save file" })
+vim.keymap.set('n', '<leader>q', ':q<CR>', { desc = "Quit" })
+vim.keymap.set('n', '<leader>Q', ':qa!<CR>', { desc = "Force quit all" })
+vim.keymap.set('n', '<leader>x', ':wq<CR>', { desc = "Save and quit" })
 
 -- buffer operations
-vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
-vim.keymap.set("n", "<leader>l", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>h", ":bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = "Delete buffer" })
+vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = "Next buffer" })
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = "Previous buffer" })
 
 -- window operations
-vim.keymap.set("n", "<leader>vs", ":vsplit<CR>", { desc = "Vertical split" })
-vim.keymap.set("n", "<leader>hs", ":split<CR>", { desc = "Horizontal split" })
-vim.keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Close current split" })
-vim.keymap.set("n", "<C-h>", "<C-W>h", { desc = "Move to left window" })
-vim.keymap.set("n", "<C-l>", "<C-W>l", { desc = "Move to right window" })
-vim.keymap.set("n", "<C-j>", "<C-W>j", { desc = "Move to bottom window" })
-vim.keymap.set("n", "<C-k>", "<C-W>k", { desc = "Move to window above" })
+vim.keymap.set('n', '<leader>vs', ':vsplit<CR>', { desc = "Vertical split" })
+vim.keymap.set('n', '<leader>hs', ':split<CR>', { desc = "Horizontal split" })
+vim.keymap.set('n', '<leader>sx', ':close<CR>', { desc = "Close current split" })
+vim.keymap.set('n', '<C-h>', '<C-W>h', { desc = "Move to left window" })
+vim.keymap.set('n', '<C-l>', '<C-W>l', { desc = "Move to right window" })
+vim.keymap.set('n', '<C-j>', '<C-W>j', { desc = "Move to bottom window" })
+vim.keymap.set('n', '<C-k>', '<C-W>k', { desc = "Move to window above" })
 
 -- resize window using <ctrl> arrow keys
-vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
-vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = "Increase Window Height" })
+vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = "Decrease Window Height" })
+vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize -2<cr>', { desc = "Decrease Window Width" })
+vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize +2<cr>', { desc = "Increase Window Width" })
 
 -- file navigation
-vim.keymap.set("n", "<leader>/", ":Telescope live_grep<CR>", { desc = "Search in files" })
-vim.keymap.set("n", "<C-p>", ":Telescope find_files<CR>", { desc = "Find files" })
-vim.keymap.set("n", "<C-f>", ":Telescope buffers<CR>", { desc = "Find buffers" })
-vim.keymap.set("n", "<leader>fh", ":Telescope help_tags", { desc = "Find help" })
+vim.keymap.set('n', '<leader>/', ':Telescope live_grep<CR>', { desc = "Search in files" })
+vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { desc = "Find files" })
+vim.keymap.set('n', '<C-f>', ':Telescope buffers<CR>', { desc = "Find buffers" })
+vim.keymap.set('n', '<leader>fh', ':Telescope help_tags', { desc = "Find help" })
 
 -- floating terminal
-vim.keymap.set("n", "<leader>fT", function()
-  snacks.terminal()
-end, { desc = "Terminal (cwd)" })
+vim.keymap.set("n", "<leader>fT", function() snacks.terminal() end, { desc = "Terminal (cwd)" })
 
 -- copy&past improvements
-vim.keymap.set("n", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
-vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
-vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
-vim.keymap.set("v", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set('n', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set('v', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set('n', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set('v', '<leader>p', '"+p', { desc = "Paste from system clipboard" })
