@@ -95,6 +95,9 @@ local plugins = {
       })
     end,
   },
+  { -- global grep and file search
+    "nvim-telescope/telescope-fzy-native.nvim",
+  },
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
@@ -108,9 +111,14 @@ local plugins = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({}),
           },
+          fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+          },
         },
       })
       require("telescope").load_extension("ui-select")
+      require("telescope").load_extension("fzy_native")
     end,
   },
   {
@@ -323,75 +331,83 @@ local plugins = {
   },
   {
     "williamboman/mason.nvim",
+    lazy = false,
     config = function()
       require("mason").setup()
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          -- lua
-          "lua_ls",
-
-          -- web dev
-          "html",
-          "cssls",
-          "ast_grep",
-          "eslint",
-          "emmet_ls",
-          "jsonls",
-
-          -- python
-          "pyright",
-          "pylyzer",
-
-          -- rust
-          "rust_analyzer",
-
-          -- go
-          "templ",
-
-          -- docker
-          "dockerls",
-          "docker_compose_language_service",
-
-          -- yaml/toml
-          "yamlls",
-          "taplo",
-
-          -- shell
-          "bashls",
-
-          -- markdown
-          "marksman",
-        },
-        automatic_installation = true,
-      })
-    end,
+    lazy = false,
+    opts = {
+      auto_install = true,
+    },
+--    config = function()
+--      require("mason-lspconfig").setup({
+--        ensure_installed = {
+--          -- lua
+--          "lua_ls",
+--
+--          -- web dev
+--          "html",
+--          "cssls",
+--          "ast_grep",
+--          "eslint",
+--          "emmet_ls",
+--          "jsonls",
+--
+--          -- python
+--          "pyright",
+--          "pylyzer",
+--
+--          -- rust
+--          "rust_analyzer",
+--
+--          -- go
+--          "templ",
+--
+--          -- docker
+--          "dockerls",
+--          "docker_compose_language_service",
+--
+--          -- yaml/toml
+--          "yamlls",
+--          "taplo",
+--
+--          -- shell
+--          "bashls",
+--
+--          -- markdown
+--          "marksman",
+--        },
+--        automatic_installation = true,
+--      })
+--    end,
   },
   {
     "neovim/nvim-lspconfig",
+    lazy = false,
     config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
       local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
-      lspconfig.html.setup({})
-      lspconfig.cssls.setup({})
-      lspconfig.ast_grep.setup({})
-      lspconfig.eslint.setup({})
-      lspconfig.emmet_ls.setup({})
-      lspconfig.jsonls.setup({})
-      lspconfig.pyright.setup({})
-      lspconfig.pylyzer.setup({})
-      lspconfig.rust_analyzer.setup({})
-      lspconfig.templ.setup({})
-      lspconfig.dockerls.setup({})
-      lspconfig.docker_compose_language_service.setup({})
-      lspconfig.yamlls.setup({})
-      lspconfig.taplo.setup({})
-      lspconfig.bashls.setup({})
-      lspconfig.marksman.setup({})
+      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.html.setup({ capabilities = capabilities })
+      lspconfig.cssls.setup({ capabilities = capabilities })
+      lspconfig.ast_grep.setup({ capabilities = capabilities })
+      lspconfig.eslint.setup({ capabilities = capabilities })
+      lspconfig.emmet_ls.setup({ capabilities = capabilities })
+      lspconfig.jsonls.setup({ capabilities = capabilities })
+      lspconfig.pyright.setup({ capabilities = capabilities })
+      lspconfig.pylyzer.setup({ capabilities = capabilities })
+      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+      lspconfig.templ.setup({ capabilities = capabilities })
+      lspconfig.dockerls.setup({ capabilities = capabilities })
+      lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
+      lspconfig.yamlls.setup({ capabilities = capabilities })
+      lspconfig.taplo.setup({ capabilities = capabilities })
+      lspconfig.bashls.setup({ capabilities = capabilities })
+      lspconfig.marksman.setup({ capabilities = capabilities })
     end,
   },
   { -- wrapper for LSPs
@@ -412,6 +428,48 @@ local plugins = {
     end,
   },
   -- auto complete, and snippets
+  {
+    "hrsh7th/cmp-nvim-lsp",
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
+    },
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    config = function()
+      local cmp = require("cmp")
+      require("luasnip.loaders.from_vscode").lazy_load()
+      
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" }, -- for luasnip users
+        }, {
+          { name = "buffer" },
+        }),
+      })
+    end,
+  },
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
