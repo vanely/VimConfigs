@@ -1,8 +1,5 @@
 ---@diagnostic disable: undefined-global
---vim.cmd("set expandtab")
---vim.cmd("set tabstop=2")
---vim.cmd("set softtabstop=2")
---vim.cmd("set shiftwidth=2")
+
 -- vim options
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -342,47 +339,6 @@ local plugins = {
     opts = {
       auto_install = true,
     },
---    config = function()
---      require("mason-lspconfig").setup({
---        ensure_installed = {
---          -- lua
---          "lua_ls",
---
---          -- web dev
---          "html",
---          "cssls",
---          "ast_grep",
---          "eslint",
---          "emmet_ls",
---          "jsonls",
---
---          -- python
---          "pyright",
---          "pylyzer",
---
---          -- rust
---          "rust_analyzer",
---
---          -- go
---          "templ",
---
---          -- docker
---          "dockerls",
---          "docker_compose_language_service",
---
---          -- yaml/toml
---          "yamlls",
---          "taplo",
---
---          -- shell
---          "bashls",
---
---          -- markdown
---          "marksman",
---        },
---        automatic_installation = true,
---      })
---    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -432,6 +388,9 @@ local plugins = {
     "hrsh7th/cmp-nvim-lsp",
   },
   {
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+  },
+  {
     "L3MON4D3/LuaSnip",
     dependencies = {
       "saadparwaiz1/cmp_luasnip",
@@ -462,6 +421,7 @@ local plugins = {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
+          { name = "nvim_lsp_signature_help" },
           { name = "nvim_lsp" },
           { name = "luasnip" }, -- for luasnip users
         }, {
@@ -484,29 +444,15 @@ vim.cmd.colorscheme("catppuccin")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- TODO: snacks lib doesn't seem to be working.
--- snacks reference and keymaps
-_G.notify = function(msg, level, opts)
-  level = level or "info"
-  opts = opts or {}
-  snacks.notify(msg, level, opts)
-end
+-- open nvim config
+vim.keymap.set('n', '<leader>co', ':e ~/.config/nvim/init.lua<CR>', { silent = true, desc = "Open nvim config" })
 
--- Example keymaps for managing notifications
-vim.keymap.set("n", "<leader>sn", function()
-  snacks.dismiss_all()
-end, { desc = "Dismiss all notifications" })
-
-vim.keymap.set("n", "<leader>sl", function()
-  snacks.show_log()
-end, { desc = "Show notification log" })
-
--- key maps and re-maps
-vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode with jj" })
+-- escape keymaps 
+vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Exit insert mode with jj" })
 vim.keymap.set("n", "<Esc>", ":noh<CR>", { silent = true, desc = "Clear search highlight" })
 
 -- lsp keymappings
-vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show identifier details"} )
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to where code artifact is defined" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Display available actions to take on code" })
 
@@ -522,8 +468,8 @@ vim.keymap.set("n", "<leader>be", "<cmd>Neotree buffers<cr>", { desc = "Buffer e
 vim.keymap.set("n", "<leader>fe", "<cmd>Neotree reveal<cr>", { desc = "Reveal file in explorer" })
 vim.keymap.set("n", "<leader>ce", "<cmd>Neotree close<cr>", { desc = "Close file explorere" })
 
--- add keymaps for toggling
-vim.keymap.set("n", "<leader>ti", "<cmd>IndentScopeToggle<CR>", { desc = "Toggle indent scope highlighting" })
+-- keymaps for toggling indentation
+vim.keymap.set("n", "<leader>is", "<cmd>IndentScopeToggle<CR>", { desc = "Toggle indent scope highlighting" })
 
 -- suggestions
 vim.keymap.set("n", "<C-<space>>", "")
@@ -543,10 +489,10 @@ vim.keymap.set("n", "<leader>h", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>vs", ":vsplit<CR>", { desc = "Vertical split" })
 vim.keymap.set("n", "<leader>hs", ":split<CR>", { desc = "Horizontal split" })
 vim.keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Close current split" })
-vim.keymap.set("n", "<C-h>", "<C-W>h", { desc = "Move to left window" })
-vim.keymap.set("n", "<C-l>", "<C-W>l", { desc = "Move to right window" })
-vim.keymap.set("n", "<C-j>", "<C-W>j", { desc = "Move to bottom window" })
-vim.keymap.set("n", "<C-k>", "<C-W>k", { desc = "Move to window above" })
+vim.keymap.set("n", "<C-S-h>", "<C-W>h", { desc = "Move to left window" })
+vim.keymap.set("n", "<C-S-l>", "<C-W>l", { desc = "Move to right window" })
+vim.keymap.set("n", "<C-S-j>", "<C-W>j", { desc = "Move to bottom window" })
+vim.keymap.set("n", "<C-S-k>", "<C-W>k", { desc = "Move to window above" })
 
 -- resize window using <ctrl> arrow keys
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
@@ -560,13 +506,15 @@ vim.keymap.set("n", "<C-p>", ":Telescope find_files<CR>", { desc = "Find files" 
 vim.keymap.set("n", "<C-f>", ":Telescope buffers<CR>", { desc = "Find buffers" })
 vim.keymap.set("n", "<leader>fh", ":Telescope help_tags", { desc = "Find help" })
 
--- floating terminal
-vim.keymap.set("n", "<leader>fT", function()
-  snacks.terminal()
-end, { desc = "Terminal (cwd)" })
+-- open terminal
+vim.keymap.set("n", "<leader>t", ":bel term<CR>", { desc = "Open terminal at bottom of window" })
 
 -- copy&past improvements
 vim.keymap.set("n", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 vim.keymap.set("v", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+
+vim.keymap.set('n', '<C-S-a>', function()
+    print(vim.fn.getcharstr())
+end)
