@@ -1,0 +1,49 @@
+{
+    "workbench.colorTheme": "Bearded Theme Monokai Black",
+    "workbench.iconTheme": "catppuccin-frappe",
+    "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "terminal.external.linuxExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "terminal.integrated.allowChords": false,
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "Ubuntu (WSL)": {
+            "path": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "-d",
+                "Ubuntu"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "window.zoomLevel": 1,
+    "editor.tabSize": 2,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "remote.SSH.remotePlatform": {
+        "coder-vscode--candidate--vanely-santos-take-2": "linux"
+    },
+    // "vim.vimrc.enable": true,
+    // "vim.vimrc.path": "$HOME/.vimrc",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.associations": {
+        "*.html": "html"
+    },
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
+    "vscode-neovim.useWSL": true
+}
