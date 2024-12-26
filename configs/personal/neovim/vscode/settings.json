@@ -1,0 +1,294 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "editor.tabSize": 2,
+    "editor.lineNumbers": "relative",
+    "remote.SSH.remotePlatform": {
+        "coder-vscode--candidate--vanely-santos-take-2": "linux"
+    },
+    // "vim.vimrc.enable": true,
+    // "vim.vimrc.path": "$HOME/.vimrc",
+    "explorer.confirmDelete": false,
+    "workbench.colorTheme": "Bearded Theme Monokai Black",
+    "go.toolsManagement.autoUpdate": true,
+    "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/vscode/vscode-init.lua",
+
+    // neovim configs-----------------------------------------------------------------
+    "vscode-neovim.easymotion": true,
+    "vscode-neovim.incsearch": true,
+    "vscode-neovim.useSystemClipboard": true,
+    "vscode-neovim.useCtrlKeys": true,
+    "vscode-neovim.hlsearch": true,
+    // "vscode-neovim.insertModeKeyBindings": [
+    //     {
+    //         "before": [
+    //             "j",
+    //             "j"
+    //         ],
+    //         "after": [
+    //             "<Esc>"
+    //         ]
+    //     }
+    // ],
+    // "vscode-neovimm.normalModeKeyBindingsNonRecursive": [
+    //     // LSP functionality
+    //     {
+    //         "before": [
+    //             "K"
+    //         ],
+    //         "commands": [
+    //             "editor.action.showHover"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "g",
+    //             "d"
+    //         ],
+    //         "commands": [
+    //             "editor.action.revealDefinition"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "c",
+    //             "a"
+    //         ],
+    //         "commands": [
+    //             "editor.action.quickFix"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "g",
+    //             "f"
+    //         ],
+    //         "commands": [
+    //             "editor.action.formatDocument"
+    //         ]
+    //     },
+    //     // File navigation
+    //     {
+    //         "before": [
+    //             "<C-p>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.quickOpen"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "/"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.findInFiles"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-f>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.quickOpen"
+    //         ]
+    //     },
+    //     // File operations
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "w"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.files.save"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "q"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.closeActiveEditor"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "Q"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.closeAllEditors"
+    //         ]
+    //     },
+    //     // Window operations
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "v",
+    //             "s"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.splitEditor"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "h",
+    //             "s"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.splitEditorDown"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "s",
+    //             "x"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.closeActiveEditor"
+    //         ]
+    //     },
+    //     // Buffer/Tab operations
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "l"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.nextEditor"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "h"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.previousEditor"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "b",
+    //             "d"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.closeActiveEditor"
+    //         ]
+    //     },
+    //     // Terminal
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "t"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.terminal.toggleTerminal"
+    //         ]
+    //     },
+    //     // Window navigation
+    //     {
+    //         "before": [
+    //             "<C-S-h>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.focusLeftGroup"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-S-l>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.focusRightGroup"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-S-j>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.focusBelowGroup"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-S-k>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.focusAboveGroup"
+    //         ]
+    //     },
+    //     // Window resizing
+    //     {
+    //         "before": [
+    //             "<C-Up>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.increaseViewHeight"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-Down>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.decreaseViewHeight"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-Left>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.increaseViewWidth"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<C-Right>"
+    //         ],
+    //         "commands": [
+    //             "workbench.action.decreaseViewWidth"
+    //         ]
+    //     }
+    // ],
+    // "vscode-neovim.visualModeKeyBindingsNonRecursive": [
+    //     // Copy/paste operations
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "y"
+    //         ],
+    //         "after": [
+    //             "\"+y"
+    //         ]
+    //     },
+    //     {
+    //         "before": [
+    //             "<leader>",
+    //             "p"
+    //         ],
+    //         "after": [
+    //             "\"+p"
+    //         ]
+    //     }
+    // ],
+    // "vscode-neovim.leader": "<space>",
+    // "vscode-neovim.handleKeys": {
+    //     "<C-a>": false,
+    //     "<C-f>": false
+    // },
+    // "// To improve performance": "",
+}
