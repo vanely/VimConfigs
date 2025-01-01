@@ -1,0 +1,11 @@
+#!/bin/bash
+
+input_is_number() {
+  re='^[0-9]+$'
+  if [[ ${1} =~ $re ]] ; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+ 

@@ -1,5 +1,67 @@
 #!/usr/bin/bash
 
+set -e  # Exit on error
+set -u  # Exit on undefined variable
+
+detect_operating_system() {
+  # Detect operating system
+  os_name=$(uname -s)
+  case "$os_name" in
+      Linux*)     machine=Linux;;
+      Darwin*)    machine=Mac;;
+      *)          
+          machine="non"
+          # echo "Unsupported operating system: ${os_name}"
+          ;;
+  esac
+  echo $machine
+}
+
+source_shell_config() {
+  if [[ -f "${HOME}/.zshrc" ]]; then
+    source "${HOME}/.zshrc"
+  else 
+    source "${HOME}/.bashrc"
+  fi
+}
+
+current_os=$(detect_operating_system)
+
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to check if running with sudo privileges
+check_sudo() {
+    if [ "$(id -u)" -ne 0 ]; then
+        echo "This script must be run with sudo privileges"
+        exit 1
+    fi
+}
+
+# Function to update package repositories
+update_repos() {
+    case "$1" in
+        "Linux")
+            if command_exists apt-get; then
+                apt-get update
+            elif command_exists dnf; then
+                dnf check-update || true  # dnf returns 100 if updates available
+            elif command_exists pacman; then
+                pacman -Sy
+            fi
+            ;;
+        "Mac")
+            if command_exists brew; then
+                brew update
+            else
+                echo "Homebrew not found. Installing Homebrew..."
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            fi
+            ;;
+    esac
+}
+
 install_homebrew() {
   if ! command -v brew &> /dev/null; then
     echo "Preparing to install brew package manager"
@@ -82,15 +144,15 @@ generate_random_char() {
 
 install_vim() {
   # Detect operating system
-  if [[ "${OSTYPE}" == "linux-gnu" ]]; then
-    # Linux(ubuntu/debian)
+  if [[ "${current_os}" == "Linux" ]]; then
+      # Linux(ubuntu/debian)
     if command -v apt-get >/dev/null 2>&1; then
       sudo apt-get update
       sudo apt-get install -y vim
     else
       echo "Unsuported Linux distribution. Please install vim manually."
     fi
-  elif [[ "${OSTYPE}" == "darwin" ]]; then
+  elif [[ "${current_os}" == "Mac" ]]; then
     # macOS
     if command -v brew >/dev/null 2>&1; then
       brew update
@@ -100,12 +162,10 @@ install_vim() {
       brew update
       brew install vim
     fi
-  elif [[ "${OSTYPE}" == "msys" ]]; then
+  else 
     # Windows(Git Bash/MSYS2)
     curl -fLo ./vim_install.exe  https://github.com/vim/vim-win32-installer/releases/download/v9.1.0/gvim_9.1.0_x64_signed.exe
     powershell ./vim_install.exe
-  else
-    echo "Unsupported operating system. Please install vim manually."
   fi
 }
 
@@ -128,7 +188,7 @@ create_vim_directories() {
   done
 }
 
-copy_config_to_home() {
+copy_vim_config_to_home() {
   CURRENT_DIR="$(pwd)"
   NEW_VIMRC_PATH="../configs/personal/.vimrc"
 
@@ -245,3 +305,50 @@ install_prefered_themes() {
   # -------------------------------------------------------------------------------
 }
 
+install_neovim() {
+  # check if nvim command exists
+  if [[ -n "$(which nvim)" ]]; then
+    echo "Neovim is already installed."
+  else
+    echo "Detected operating system: $current_os"
+
+    # Install Neovim based on OS
+    echo "Installing Neovim..."
+    case "$current_os" in
+      "Linux")
+        curl "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz" -o "${HOME}/Downloads/nvim-linux64.tar.gz"
+        sudo tar -xzf "${HOME}/Downloads/nvim-linux64.tar.gz" -C "/usr/local"
+        sudo ln -s "/usr/local/nvim-linux64/bin/nvim" "/usr/local/bin"
+        if [[ -f "${HOME}/.zshrc" ]]; then
+          source "${HOME}/.zshrc"
+        else 
+          source "${HOME}/.bashrc"
+        fi
+        ;;
+      "Mac")
+        if [[ $(uname -m) == 'arm64' ]]; then
+          brew install neovim
+          curl "https://github.com/neovim/neovim/releases/latest/download/nvim-macos-arm64.tar.gz" -o "${HOME}/Downloads/nvim-macos-arm64.tar.gz"
+          sudo tar -xzf "${HOME}/Downloads/nvim-macos-arm64.tar.gz" -C "/usr/local"
+          sudo ln -s "/usr/local/nvim-macos-arm64/bin/nvim" "/usr/local/bin"
+          source_shell_config
+        else
+          brew install neovim
+          curl "https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz" -o "${HOME}/Downloads/nvim-macos-x86_64.tar.gz"
+          sudo tar -xzf "${HOME}/Downloads/nvim-macos-x86_64.tar.gz" -C "/usr/local"
+          sudo ln -s "/usr/local/nvim-macos-x86_64/bin/nvim" "/usr/local/bin"
+          source_shell_config
+        fi
+      ;;
+    esac
+
+    # Verify installation
+    if command_exists nvim; then
+        echo "Neovim has been successfully installed!"
+        nvim --version | head -n 1
+    else
+        echo "Installation failed. Please check the error messages above."
+        exit 1
+    fi
+  fi
+}
