@@ -190,11 +190,19 @@ create_vim_directories() {
 
 create_neovim_directories() {
   NEOVIM_DIR="${HOME}/.config/nvim"
-  
+  NEOVIM_VSCODE_DIR="${HOME}/.config/nvim/vscode"
+   
+  # Create the neovim directories
   if [[ ! -d "${NEOVIM_DIR}" ]]; then
     echo "Creating ${NEOVIM_DIR} directory."
     mkdir -p "${NEOVIM_DIR}"
   fi
+  
+  if [[ ! -d "${NEOVIM_VSCODE_DIR}" ]]; then
+    echo "Creating ${NEOVIM_VSCODE_DIR} directory."
+    mkdir -p "${NEOVIM_VSCODE_DIR}"
+  fi
+  
 }
 
 copy_vim_config_to_home() {
@@ -233,12 +241,12 @@ copy_neovim_config_to_home() {
     mv "${HOME}/.config/nvim/init.lua" "${HOME}/.config/nvim/init_${RANDOM_CHAR}.lua"
   fi
 
-  if [[ -f "${HOME}/.config/nvim/vscode.vim" ]]; then
+  if [[ -f "${HOME}/.config/nvim/vscode/vscode.vim" ]]; then
     RANDOM_CHAR="$(generate_random_char)"
 
     # Rename the existing vscode.vim file
     echo "Renaming existing vscode neovim config to vscode_${RANDOM_CHAR}.vim"
-    mv "${HOME}/.config/nvim/vscode.vim" "${HOME}/.config/nvim/vscode_${RANDOM_CHAR}.vim"
+    mv "${HOME}/.config/nvim/vscode/vscode.vim" "${HOME}/.config/nvim/vscode/vscode_${RANDOM_CHAR}.vim"
   fi
 
   # Copy new init.lua to home directory
@@ -251,14 +259,14 @@ copy_neovim_config_to_home() {
 
   # Copy new vscode.vim to home directory
   if [[ -f "${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH}" ]]; then
-    cp "${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH}" "${HOME}/.config/nvim/vscode.vim"
-    echo "Copied new vscode neovim config to ${HOME}/.config/nvim"
+    cp "${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH}" "${HOME}/.config/nvim/vscode/vscode.vim"
+    echo "Copied new vscode neovim config to ${HOME}/.config/nvim/vscode"
   else
     echo "The file ${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH} does not exist."
   fi
 }
 
-install_vim_plug() {
+install_vim_piug() {
   VIM_PLUG_PATH="${HOME}/.vim/autoload/plug.vim"
   VIM_PLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 

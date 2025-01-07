@@ -8,15 +8,15 @@ nnoremap <leader>q <Cmd>call VSCodeCall('workbench.action.closeActiveEditor')<CR
 nnoremap <leader>e <Cmd>call VSCodeCall('workbench.action.toggleSidebarVisibility')<CR>
 
 " Function navigation
-nnoremap [f <Cmd>call VSCodeCall('editor.action.previousMethodOrFunctionDefinition')<CR>
-nnoremap ]f <Cmd>call VSCodeCall('editor.action.nextMethodOrFunctionDefinition')<CR>
-nnoremap [[ <Cmd>call VSCodeCall('editor.action.previousMethodOrFunctionDefinition')<CR>
-nnoremap ]] <Cmd>call VSCodeCall('editor.action.nextMethodOrFunctionDefinition')<CR>
+" nnoremap [f <Cmd>call VSCodeCall('editor.action.previousMethodOrFunctionDefinition')<CR>
+" nnoremap ]f <Cmd>call VSCodeCall('editor.action.nextMethodOrFunctionDefinition')<CR>
+" nnoremap [[ <Cmd>call VSCodeCall('editor.action.previousMethodOrFunctionDefinition')<CR>
+nnoremap ]] <Cmd>call VSCodeCall('editor.action.jumpToBracket')<CR>
 
 " Finding and navigation
-noremap <leader>ff <Cmd>call VSCodeCall('workbench.action.quickOpen')<CR>
-nnoremap <leader>fb <Cmd>call VSCodeCall('workbench.action.showAllEditors')<CR>
-nnoremap <leader>fd <Cmd>call VSCodeCall('editor.action.revealDefinition')<CR>
+" noremap <leader>ff <Cmd>call VSCodeCall('workbench.action.quickOpen')<CR>
+" nnoremap <leader>fb <Cmd>call VSCodeCall('workbench.action.showAllEditors')<CR>
+nnoremap <leader>gd <Cmd>call VSCodeCall('editor.action.revealDefinition')<CR>
 
 " Window management
 nnoremap <leader>vs <Cmd>call VSCodeCall('workbench.action.splitEditor')<CR>
@@ -29,7 +29,7 @@ nnoremap <leader>rn <Cmd>call VSCodeCall('editor.action.rename')<CR>
 
 " Terminal and panel control
 nnoremap <leader>t <Cmd>call VSCodeCall('workbench.action.terminal.toggleTerminal')<CR>
-nnoremap <leader>p <Cmd>call VSCodeCall('workbench.action.togglePanel')<CR>
+nnoremap <leader>T <Cmd>call VSCodeCall('workbench.action.togglePanel')<CR>
 
 " Buffer navigation
 nnoremap <leader>l <Cmd>call VSCodeCall('workbench.action.nextEditor')<CR>

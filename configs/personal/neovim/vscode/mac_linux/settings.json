@@ -33,7 +33,7 @@
         // Quick Escape combinations
         "jj": {
             "command": "vscode-neovim.escape",
-            "when": "editorTextFocus && neovim.mode == insert",
+            "when": "editorTextFocus && neovim.mode == insert"
         },
         "jk": {
             "command": "vscode-neovim.lua",
