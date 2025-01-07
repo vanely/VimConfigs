@@ -1,0 +1,8 @@
+#!/bin/bash
+
+EXECUTION_CONTEXT=$(pwd)
+
+# source "${EXECUTION_CONTEXT}/choose-text-editor"
+echo "helpers-tst: ${EXECUTION_CONTEXT}"
+# install_neovim
+# choose_text_editor_to_install

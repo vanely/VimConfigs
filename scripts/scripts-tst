@@ -1,0 +1,6 @@
+#!/bin/bash
+EXECUTION_CONTEXT=$(pwd)
+
+source "${EXECUTION_CONTEXT}/helpers/helpers-tst"
+
+echo "scripts-tst: ${EXECUTION_CONTEXT}"

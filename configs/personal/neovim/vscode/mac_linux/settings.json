@@ -1,6 +1,7 @@
 {
     "security.workspace.trust.untrustedFiles": "open",
-    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.colorTheme": "Bearded Theme Monokai Black",
+    "workbench.iconTheme": "catppuccin-perfect-mocha",
     "editor.tabSize": 2,
     "editor.lineNumbers": "relative",
     "remote.SSH.remotePlatform": {
@@ -8,10 +9,8 @@
     },
     // "vim.vimrc.enable": true,
     // "vim.vimrc.path": "$HOME/.vimrc",
-    "explorer.confirmDelete": false,
-    "workbench.colorTheme": "Bearded Theme Monokai Black",
+    "explorer.confirmDelete": true,
     "go.toolsManagement.autoUpdate": true,
-    "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
@@ -20,6 +19,7 @@
     "editor.semanticHighlighting.enabled": true,
     // neovim configs-----------------------------------------------------------------
     // https://gist.github.com/rajeakshay/d6ebe2a8ec23055dfd92d884df52aee1
+    "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
     "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/vscode/vscode.vim",
     // "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/vscode/vscode.vim",
     // "vscode-neovim.neovimInitVimPaths.win32": "C:\\path\\to\\your\\vscode.vim",

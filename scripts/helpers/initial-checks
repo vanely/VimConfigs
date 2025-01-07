@@ -188,6 +188,15 @@ create_vim_directories() {
   done
 }
 
+create_neovim_directories() {
+  NEOVIM_DIR="${HOME}/.config/nvim"
+  
+  if [[ ! -d "${NEOVIM_DIR}" ]]; then
+    echo "Creating ${NEOVIM_DIR} directory."
+    mkdir -p "${NEOVIM_DIR}"
+  fi
+}
+
 copy_vim_config_to_home() {
   CURRENT_DIR="$(pwd)"
   NEW_VIMRC_PATH="../configs/personal/.vimrc"
@@ -207,6 +216,45 @@ copy_vim_config_to_home() {
     echo "Copied new .vimrc to ${HOME}"
   else
     echo "The file ${CURRENT_DIR}/${NEW_VIMRC_PATH} does not exist."
+  fi
+}
+
+copy_neovim_config_to_home() {
+  CURRENT_DIR="$(pwd)"
+  NEW_NEOVIM_CONFIG_PATH="../configs/personal/neovim/init.lua"
+  NEW_VSCODE_NEOVIM_CONFIG_PATH="../configs/personal/neovim/vscode/vscode.vim"
+
+    # Check if neovim config already exists in home directory, to make way for the new one.
+  if [[ -f "${HOME}/.config/nvim/init.lua" ]]; then
+    RANDOM_CHAR="$(generate_random_char)"
+
+    # Rename the existing init.lua file
+    echo "Renaming existing neovim config to init_${RANDOM_CHAR}.lua"
+    mv "${HOME}/.config/nvim/init.lua" "${HOME}/.config/nvim/init_${RANDOM_CHAR}.lua"
+  fi
+
+  if [[ -f "${HOME}/.config/nvim/vscode.vim" ]]; then
+    RANDOM_CHAR="$(generate_random_char)"
+
+    # Rename the existing vscode.vim file
+    echo "Renaming existing vscode neovim config to vscode_${RANDOM_CHAR}.vim"
+    mv "${HOME}/.config/nvim/vscode.vim" "${HOME}/.config/nvim/vscode_${RANDOM_CHAR}.vim"
+  fi
+
+  # Copy new init.lua to home directory
+  if [[ -f "${CURRENT_DIR}/${NEW_NEOVIM_CONFIG_PATH}" ]]; then
+    cp "${CURRENT_DIR}/${NEW_NEOVIM_CONFIG_PATH}" "${HOME}/.config/nvim/init.lua"
+    echo "Copied new neovim config to ${HOME}/.config/nvim"
+  else
+    echo "The file ${CURRENT_DIR}/${NEW_NEOVIM_CONFIG_PATH} does not exist."
+  fi
+
+  # Copy new vscode.vim to home directory
+  if [[ -f "${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH}" ]]; then
+    cp "${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH}" "${HOME}/.config/nvim/vscode.vim"
+    echo "Copied new vscode neovim config to ${HOME}/.config/nvim"
+  else
+    echo "The file ${CURRENT_DIR}/${NEW_VSCODE_NEOVIM_CONFIG_PATH} does not exist."
   fi
 }
 
