@@ -2,11 +2,11 @@
 
 EXECUTION_CONTEXT=$(pwd)
 source "${EXECUTION_CONTEXT}/helpers/utils"
-source "${EXECUTION_CONTEXT}/helpers/initial-checks"
+source "${EXECUTION_CONTEXT}/helpers/install-neovim"
 source "${EXECUTION_CONTEXT}/helpers/install-vim"
 
 choose_text_editor_to_install() {
-  local text_editors=(install_classic_vim install_neovim)
+  local text_editors=(install_classic_vim install_modern_neovim)
   local text_editor_names=("Vim" "NeoVim")
   local text_editor_array_count=${#text_editors[@]}
 

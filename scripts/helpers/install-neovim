@@ -1,0 +1,18 @@
+#!/bin/bash
+
+EXECUTION_CONTEXT=$(pwd)
+source "${EXECUTION_CONTEXT}/helpers/initial-checks"
+
+install_modern_neovim() {
+  if [[ -n "$(which nvim)" ]]; then
+    echo "Neovim is already installed."
+  else
+    install_neovim
+    # check if the following directory tree exists and create it if it doesn't
+    # ~/.config/
+    #  - nvim/
+    create_neovim_directories
+    # copy .vimrc config to home directory. If there's one already then rename it, and copy
+    copy_neovim_config_to_home
+  fi
+}
