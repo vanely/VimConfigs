@@ -2,9 +2,10 @@
 [
   // Insert mode bindings
   {
-    "key": "j j",
     "command": "vscode-neovim.escape",
-    "when": "editorTextFocus && neovim.mode == 'insert'"
+    "key": "j",
+    "when": "neovim.mode == insert && editorTextFocus",
+    "args": "j"
   },
   // Normal mode binding,
   {

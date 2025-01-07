@@ -15,280 +15,35 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/vscode/vscode-init.lua",
-
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.foldingStrategy": "auto",
+    "editor.semanticHighlighting.enabled": true,
     // neovim configs-----------------------------------------------------------------
-    "vscode-neovim.easymotion": true,
-    "vscode-neovim.incsearch": true,
-    "vscode-neovim.useSystemClipboard": true,
-    "vscode-neovim.useCtrlKeys": true,
-    "vscode-neovim.hlsearch": true,
-    // "vscode-neovim.insertModeKeyBindings": [
-    //     {
-    //         "before": [
-    //             "j",
-    //             "j"
-    //         ],
-    //         "after": [
-    //             "<Esc>"
-    //         ]
-    //     }
-    // ],
-    // "vscode-neovimm.normalModeKeyBindingsNonRecursive": [
-    //     // LSP functionality
-    //     {
-    //         "before": [
-    //             "K"
-    //         ],
-    //         "commands": [
-    //             "editor.action.showHover"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "g",
-    //             "d"
-    //         ],
-    //         "commands": [
-    //             "editor.action.revealDefinition"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "c",
-    //             "a"
-    //         ],
-    //         "commands": [
-    //             "editor.action.quickFix"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "g",
-    //             "f"
-    //         ],
-    //         "commands": [
-    //             "editor.action.formatDocument"
-    //         ]
-    //     },
-    //     // File navigation
-    //     {
-    //         "before": [
-    //             "<C-p>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.quickOpen"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "/"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.findInFiles"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-f>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.quickOpen"
-    //         ]
-    //     },
-    //     // File operations
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "w"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.files.save"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "q"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.closeActiveEditor"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "Q"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.closeAllEditors"
-    //         ]
-    //     },
-    //     // Window operations
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "v",
-    //             "s"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.splitEditor"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "h",
-    //             "s"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.splitEditorDown"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "s",
-    //             "x"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.closeActiveEditor"
-    //         ]
-    //     },
-    //     // Buffer/Tab operations
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "l"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.nextEditor"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "h"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.previousEditor"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "b",
-    //             "d"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.closeActiveEditor"
-    //         ]
-    //     },
-    //     // Terminal
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "t"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.terminal.toggleTerminal"
-    //         ]
-    //     },
-    //     // Window navigation
-    //     {
-    //         "before": [
-    //             "<C-S-h>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.focusLeftGroup"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-S-l>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.focusRightGroup"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-S-j>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.focusBelowGroup"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-S-k>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.focusAboveGroup"
-    //         ]
-    //     },
-    //     // Window resizing
-    //     {
-    //         "before": [
-    //             "<C-Up>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.increaseViewHeight"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-Down>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.decreaseViewHeight"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-Left>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.increaseViewWidth"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<C-Right>"
-    //         ],
-    //         "commands": [
-    //             "workbench.action.decreaseViewWidth"
-    //         ]
-    //     }
-    // ],
-    // "vscode-neovim.visualModeKeyBindingsNonRecursive": [
-    //     // Copy/paste operations
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "y"
-    //         ],
-    //         "after": [
-    //             "\"+y"
-    //         ]
-    //     },
-    //     {
-    //         "before": [
-    //             "<leader>",
-    //             "p"
-    //         ],
-    //         "after": [
-    //             "\"+p"
-    //         ]
-    //     }
-    // ],
-    // "vscode-neovim.leader": "<space>",
-    // "vscode-neovim.handleKeys": {
-    //     "<C-a>": false,
-    //     "<C-f>": false
-    // },
-    // "// To improve performance": "",
+    // https://gist.github.com/rajeakshay/d6ebe2a8ec23055dfd92d884df52aee1
+    "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/vscode/vscode.vim",
+    // "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/vscode/vscode.vim",
+    // "vscode-neovim.neovimInitVimPaths.win32": "C:\\path\\to\\your\\vscode.vim",
+    "keyboard.dispatch": "keyCode",
+    "vscode-neovim.useWSL": false,
+    "vscode-neovim.keybindingsEnabled": true,
+    "vscode-neovim.keyCommandWaitTimeout": 200,
+
+    // vscode needs to be restarted for compositeKeys to take effect
+    "vscode-neovim.compositeKeys": {
+        // Quick Escape combinations
+        "jj": {
+            "command": "vscode-neovim.escape",
+            "when": "editorTextFocus && neovim.mode == insert",
+        },
+        "jk": {
+            "command": "vscode-neovim.lua",
+            "args": [
+                [
+                    "local code = require('vscode')",
+                    "code.action('vscode-neovim.escape')",
+                    "code.action('workbench.action.files.save')"
+                ]
+            ]
+        }
+    }
 }
