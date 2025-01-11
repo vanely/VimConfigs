@@ -45,6 +45,16 @@
     "editor.gotoLocation.multipleDefinitions": "goto",
     "editor.foldingStrategy": "auto",
     "editor.semanticHighlighting.enabled": true,
+    // neovim UI modifier colors
+    "nvim-ui.nvimColorNormal": "#ffc600",
+    "nvim-ui.nvimColorInsert": "#D32F2F",
+    "nvim-ui.nvimColorVisual": "#673AB7",
+    "nvim-ui.nvimColorReplace": "#000",
+    "nvim-ui.nvimColorCustomizationKeys": [
+        "tab.activeBorder",
+        "editorCursor.foreground"
+    ],
+
     // neovim configs-----------------------------------------------------------------
     // https://gist.github.com/rajeakshay/d6ebe2a8ec23055dfd92d884df52aee1
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
