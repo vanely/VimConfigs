@@ -7,6 +7,17 @@ List of links and resources for configuring vim & neovim:
 * Vim Mappings Sheet: http://eriklievaart.com/cheat/applications/vim/vimmap.html
 * Neovim vscode extension setup: https://didoesdigital.com/blog/neovim-to-vs-code/ 
 
+Terminal vim:
+* vi mode in bash terminal: https://dev.to/brandonwallace/how-to-use-vim-mode-on-the-command-line-in-bash-fnn
+* vi mode in zsh terminal & general zsh config: https://thevaluable.dev/zsh-install-configure-mouseless/  
+  - key mapping for zsh vi mode: https://unix.stackexchange.com/questions/101182/bind-key-sequence-to-escape-zsh#101211
+  bindkey -v
+  bindkey jj vi-cmd-mode
+  export KEYTIMEOUT=1
+
+  - enabling in bash:
+  set o -vi
+
 List of Syntax Themes I like so far:
 * https://github.com/morhetz/gruvbox
 * https://github.com/tomasr/molokai
