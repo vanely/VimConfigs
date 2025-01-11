@@ -35,15 +35,40 @@
     "remote.SSH.remotePlatform": {
         "coder-vscode--candidate--vanely-santos-take-2": "linux"
     },
-    // "vim.vimrc.enable": true,
-    // "vim.vimrc.path": "$HOME/.vimrc",
-    "extensions.experimental.affinity": {
-        "asvetliakov.vscode-neovim": 1
-    },
     "security.workspace.trust.untrustedFiles": "open",
     "files.associations": {
         "*.html": "html"
     },
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.foldingStrategy": "auto",
+    "editor.semanticHighlighting.enabled": true,
+    // neovim configs-----------------------------------------------------------------
+    // https://gist.github.com/rajeakshay/d6ebe2a8ec23055dfd92d884df52aee1
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
-    "vscode-neovim.useWSL": true
+    "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/vscode/vscode.vim",
+    "keyboard.dispatch": "keyCode",
+    "vscode-neovim.useWSL": true,
+    "vscode-neovim.keybindingsEnabled": true,
+    "vscode-neovim.keyCommandWaitTimeout": 200,
+    // vscode needs to be restarted for compositeKeys to take effect
+    "vscode-neovim.compositeKeys": {
+        // Quick Escape combinations
+        "jj": {
+            "command": "vscode-neovim.escape",
+            "when": "editorTextFocus && neovim.mode == insert"
+        },
+        "jk": {
+            "command": "vscode-neovim.lua",
+            "args": [
+                [
+                    "local code = require('vscode')",
+                    "code.action('vscode-neovim.escape')",
+                    "code.action('workbench.action.files.save')"
+                ]
+            ]
+        }
+    }
 }
