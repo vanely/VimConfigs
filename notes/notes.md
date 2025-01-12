@@ -11,6 +11,7 @@ Terminal vim:
 * vi mode in bash terminal: https://dev.to/brandonwallace/how-to-use-vim-mode-on-the-command-line-in-bash-fnn
 * vi mode in zsh terminal & general zsh config: https://thevaluable.dev/zsh-install-configure-mouseless/  
   - key mapping for zsh vi mode: https://unix.stackexchange.com/questions/101182/bind-key-sequence-to-escape-zsh#101211
+  - zsh vim style: https://tarleb.com/posts/howto-zsh-vi-style/
   bindkey -v
   bindkey jj vi-cmd-mode
   export KEYTIMEOUT=1
