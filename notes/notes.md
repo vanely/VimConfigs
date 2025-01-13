@@ -25,4 +25,14 @@ List of Syntax Themes I like so far:
 * https://draculatheme.com/vim
 * https://github.com/kyoz/purify/tree/master/vim
 
+Turning on developer mode in your Discord account
+Going to the Discord Developer Portal﻿
+Clicking New Application
+Naming the bot and clicking Create
+Going to the Bot menu and generating a token using Add Bot
+Programming your bot using the bot token and saving the file
+Defining other details for your bot under General Information
+Clicking on OAuth2, activating bot, setting the permissions, and then clicking on Copy
+Selecting your server to add your bot to it
+
 List of Plugins:
