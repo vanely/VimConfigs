@@ -1,6 +1,8 @@
 {
     "workbench.colorTheme": "Bearded Theme Monokai Black",
     "workbench.iconTheme": "catppuccin-frappe",
+    "editor.fontSize": 12,
+    "terminal.integrated.fontSize": 12,
     "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
     "terminal.external.linuxExec": "C:\\Program Files\\Git\\bin\\bash.exe",
     "terminal.integrated.allowChords": false,
