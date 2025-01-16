@@ -1,4 +1,42 @@
 " VSCode Neovim Configuration
+
+" Highlight cursor line underneath the cursor horizontally.
+set cursorline
+" Highlight cursor line underneath the cursor vertically.
+set cursorcolumn
+" Set highlight search
+set hlsearch
+" Set tab width to 4 columns.
+set tabstop=2
+" Use space characters instead of tabs.
+set expandtab
+set smarttab
+set ai "Auto inden
+" usaved changes are not discarded when the file is abandoned(not the active
+" in any buffer, window, or tab, and can only be viewed when buffers are
+" listed)
+set hidden
+" While searching though a file incrementally highlight matching characters as you type.
+set incsearch
+" Ignore capital letters during search.
+set ignorecase
+" Override the ignorecase option if searching for capital letters.
+" This will allow you to search specifically for capital letters.
+set smartcase
+" Show partial command you type in the last line of the screen.
+set showcmd
+" Show the mode you are on the last line.
+set showmode
+" Show matching words during a search.
+set showmatch
+" Set regular expression engine automatically
+set regexpengine=0
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+" For regular expressions turn magic on
+set magic
 " Set leader key to space
 let mapleader = " "
 
@@ -49,6 +87,9 @@ nnoremap <C-j> <Cmd>call VSCodeCall('workbench.action.navigateDown')<CR>
 nnoremap <C-k> <Cmd>call VSCodeCall('workbench.action.navigateUp')<CR>
 nnoremap <C-l> <Cmd>call VSCodeCall('workbench.action.navigateRight')<CR>
 
+" clear search highlights with escape
+nnoremap <silent> <esc> :noh<CR><esc>
+
 " Clipboard optimizations
 " Copy to system clipboard
 nnoremap <leader>y "+y
@@ -63,15 +104,3 @@ nnoremap <leader>P "+P
 " Copy file path
 nnoremap <leader>yp <Cmd>call VSCodeCall('copyFilePath')<CR>
 nnoremap <leader>yr <Cmd>call VSCodeCall('copyRelativeFilePath')<CR>
-
-" Recommended VSCode-Neovim settings
-" Add these to your VSCode settings.json:
-" {
-"   "vscode-neovim.neovimInitVimPaths.darwin": "/path/to/your/vscode.vim",
-"   "vscode-neovim.neovimInitVimPaths.linux": "/path/to/your/vscode.vim",
-"   "vscode-neovim.neovimInitVimPaths.win32": "C:\\path\\to\\your\\vscode.vim",
-"   "keyboard.dispatch": "keyCode",
-"   "vscode-neovim.useWSL": false,
-"   "vscode-neovim.keybindingsEnabled": true,
-"   "vscode-neovim.keyCommandWaitTimeout": 750
-" }
