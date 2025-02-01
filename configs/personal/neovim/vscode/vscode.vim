@@ -54,7 +54,7 @@ nnoremap ]] <Cmd>call VSCodeCall('editor.action.jumpToBracket')<CR>
 " Finding and navigation
 " noremap <leader>ff <Cmd>call VSCodeCall('workbench.action.quickOpen')<CR>
 " nnoremap <leader>fb <Cmd>call VSCodeCall('workbench.action.showAllEditors')<CR>
-nnoremap <leader>gd <Cmd>call VSCodeCall('editor.action.revealDefinition')<CR>
+nnoremap <leader>gf <Cmd>call VSCodeCall('editor.action.goToReferences')<CR>
 
 " Window management
 nnoremap <leader>vs <Cmd>call VSCodeCall('workbench.action.splitEditor')<CR>
