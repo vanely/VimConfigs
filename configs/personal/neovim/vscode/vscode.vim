@@ -87,6 +87,10 @@ nnoremap <C-j> <Cmd>call VSCodeCall('workbench.action.navigateDown')<CR>
 nnoremap <C-k> <Cmd>call VSCodeCall('workbench.action.navigateUp')<CR>
 nnoremap <C-l> <Cmd>call VSCodeCall('workbench.action.navigateRight')<CR>
 
+" Workbench shortcuts
+nnoremap <leader>fe <Cmd>call VSCodeCall('workbench.view.explorer.enabled')<CR>
+nnoremap <leader>ff <Cmd>call VSCodeCall('workbench.view.search')<CR>
+
 " clear search highlights with escape
 nnoremap <silent> <esc> :noh<CR><esc>
 
