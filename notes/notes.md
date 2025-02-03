@@ -18,6 +18,9 @@ Terminal vim:
 
   - enabling in bash:
   set o -vi
+  
+Browser vim:
+* vim in browser(includes command list): https://vimium.github.io/
 
 List of Syntax Themes I like so far:
 * https://github.com/morhetz/gruvbox
