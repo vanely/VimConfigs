@@ -1,3 +1,4 @@
+
 " VSCode Neovim Configuration
 
 " Highlight cursor line underneath the cursor horizontally.
@@ -55,10 +56,10 @@ nnoremap ]] <Cmd>call VSCodeCall('editor.action.jumpToBracket')<CR>
 " noremap <leader>ff <Cmd>call VSCodeCall('workbench.action.quickOpen')<CR>
 " nnoremap <leader>fb <Cmd>call VSCodeCall('workbench.action.showAllEditors')<CR>
 nnoremap <leader>gf <Cmd>call VSCodeCall('editor.action.goToReferences')<CR>
-
+nnoremap <leader>co :!code '/Users/vanelysantos/.config/nvim/vscode/vscode.vim'<CR>
 " Window management
 nnoremap <leader>vs <Cmd>call VSCodeCall('workbench.action.splitEditor')<CR>
-nnoremap <leader>hs <Cmd>call VSCodeCall('workbench.action.splitEditorDown')<CR>
+nnoremap <leader>sh <Cmd>call VSCodeCall('workbench.action.splitEditorDown')<CR>
 " nnoremap <leader>se <Cmd>call VSCodeCall('workbench.action.equalizeEditorGroups')<CR>
 
 " LSP-like functionality
