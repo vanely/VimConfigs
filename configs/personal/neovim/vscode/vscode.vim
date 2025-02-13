@@ -55,8 +55,13 @@ nnoremap ]] <Cmd>call VSCodeCall('editor.action.jumpToBracket')<CR>
 " Finding and navigation
 " noremap <leader>ff <Cmd>call VSCodeCall('workbench.action.quickOpen')<CR>
 " nnoremap <leader>fb <Cmd>call VSCodeCall('workbench.action.showAllEditors')<CR>
-nnoremap <leader>gf <Cmd>call VSCodeCall('editor.action.goToReferences')<CR>
+nnoremap gf <Cmd>call VSCodeCall('editor.action.goToReferences')<CR>
 nnoremap <leader>co :!code '/Users/vanelysantos/.config/nvim/vscode/vscode.vim'<CR>
+
+" tabbing
+nnoremap > >>
+nnoremap < <<
+
 " Window management
 nnoremap <leader>vs <Cmd>call VSCodeCall('workbench.action.splitEditor')<CR>
 nnoremap <leader>sh <Cmd>call VSCodeCall('workbench.action.splitEditorDown')<CR>
