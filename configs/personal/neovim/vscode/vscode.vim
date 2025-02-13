@@ -1,4 +1,3 @@
-
 " VSCode Neovim Configuration
 
 " Highlight cursor line underneath the cursor horizontally.
@@ -62,6 +61,10 @@ nnoremap <leader>co :!code '/Users/vanelysantos/.config/nvim/vscode/vscode.vim'<
 nnoremap > >>
 nnoremap < <<
 
+" Keep selection when indenting in visual mode
+vnoremap > >gv
+vnoremap < <gv
+
 " Window management
 nnoremap <leader>vs <Cmd>call VSCodeCall('workbench.action.splitEditor')<CR>
 nnoremap <leader>sh <Cmd>call VSCodeCall('workbench.action.splitEditorDown')<CR>
@@ -80,8 +83,24 @@ nnoremap <leader>l <Cmd>call VSCodeCall('workbench.action.nextEditor')<CR>
 nnoremap <leader>h <Cmd>call VSCodeCall('workbench.action.previousEditor')<CR>
 
 " Quick commenting
-nnoremap gcc <Cmd>call VSCodeCall('editor.action.commentLine')<CR>
-vnoremap gcc <Cmd>call VSCodeCall('editor.action.commentLine')<CR>
+" nnoremap gc <Cmd>call VSCodeCall('editor.action.commentLine')<CR>
+nnoremap gc gc<CR>
+" vnoremap gc <Cmd>call VSCodeCall('editor.action.commentLine')<CR>
+vnoremap gc <Cmd>call VSCodeCall('editor.action.commentLine')<CR>
+
+" Move line up with Alt+Up or <leader>k
+" nnoremap <M-Up> :m-2<CR>
+nnoremap <leader>k :m-2<CR>
+
+" Move line down with Alt+Down or <leader>j 
+" nnoremap <M-Down> :m+<CR>
+nnoremap <leader>j :m+<CR>
+
+" Visual mode mappings to move selected lines
+" vnoremap <M-Up> :m '<-2<CR>gv
+vnoremap <leader>k :m '<-2<CR>gv
+" vnoremap <M-Down> :m '>+1<CR>gv 
+vnoremap <leader>j :m '>+1<CR>gv
 
 " Additional useful VS Code specific mappings
 nnoremap <leader>/ <Cmd>call VSCodeCall('workbench.action.findInFiles')<CR>
