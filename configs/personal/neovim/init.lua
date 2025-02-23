@@ -10,7 +10,7 @@ vim.opt.tabstop = 2
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 250
 vim.opt.cursorline = true
-vim.opt.cursorcolumn = true
+-- vim.opt.cursorcolumn = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -440,6 +440,17 @@ vim.cmd.colorscheme("catppuccin")
 -- vim.cmd.colorscheme("everforest")
 -- vim.cmd.colorscheme("nordic")
 
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.cmd [[
+      highlight Normal guibg=#000000
+      highlight NormalNC guibg=#000000
+      highlight EndOfBuffer guibg=#000000
+    ]] -- Replace with your hex color
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------------------------
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -481,18 +492,42 @@ vim.keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Force quit all" })
 vim.keymap.set("n", "<leader>x", ":wq<CR>", { desc = "Save and quit" })
 
 -- buffer operations
+-- vim.api.nvim_create_user_command("SwitchBuffer", function(opts)
+--   local buf_id = tonumber(opts.args)
+--   if buf_id and vim.api.nvim_buf_is_valid(buf_id) then
+--     vim.api.nvim_set_current_buf(buf_id)
+--   else
+--     print("Invalid buffer ID")
+--   end
+-- end, { nargs = 1 })
+--
+-- vim.keymap.set("n", "<leader>sb", ":SwitchBuffer ", { desc = "Switch to buffer by ID" })
+-- vim.keymap.set("n", "<leader>lb", "<cmd>ls<CR>", { desc = "List buffers" })
+vim.keymap.set("n", "<leader>lb", "<cmd>Telescope buffers<CR>", { desc = "List buffers interactively" })
 vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
 vim.keymap.set("n", "<leader>l", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>h", ":bprevious<CR>", { desc = "Previous buffer" })
 
 -- window operations
-vim.keymap.set("n", "<leader>vs", ":vsplit<CR>", { desc = "Vertical split" })
-vim.keymap.set("n", "<leader>hs", ":split<CR>", { desc = "Horizontal split" })
+vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Vertical split" })
+vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Horizontal split" })
 vim.keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Close current split" })
-vim.keymap.set("n", "<C-S-h>", "<C-W>h", { desc = "Move to left window" })
-vim.keymap.set("n", "<C-S-l>", "<C-W>l", { desc = "Move to right window" })
-vim.keymap.set("n", "<C-S-j>", "<C-W>j", { desc = "Move to bottom window" })
-vim.keymap.set("n", "<C-S-k>", "<C-W>k", { desc = "Move to window above" })
+vim.keymap.set("n", "<C-h>", "<C-W>h", { desc = "Move to left window" })
+vim.keymap.set("n", "<C-l>", "<C-W>l", { desc = "Move to right window" })
+vim.keymap.set("n", "<C-j>", "<C-W>j", { desc = "Move to bottom window" })
+vim.keymap.set("n", "<C-k>", "<C-W>k", { desc = "Move to window above" })
+
+-- tabbing
+vim.keymap.set("n", ">", ">>", { desc = "Tab current line to the right" })
+vim.keymap.set("n", "<", "<<", { desc = "Tab current line to the left" })
+vim.keymap.set("v", ">", ">gv", { desc = "Tab current selection to the right" })
+vim.keymap.set("v", "<", "<gv", { desc = "Tab current selection to the left" })
+
+-- move lines
+vim.keymap.set("n", "<leader>k", ":m-2<CR>", { desc = "Move current line upwards" })
+vim.keymap.set("n", "<leader>j", ":m+<CR>", { desc = "Move current line downwards" })
+vim.keymap.set("v", "<leader>k", ":m '<-2<CR>gv", { desc = "Move current selection upwards" })
+vim.keymap.set("v", "<leader>j", ":m '>+1<CR>gv", { desc = "Move current selection downwards" })
 
 -- resize window using <ctrl> arrow keys
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
@@ -511,7 +546,7 @@ vim.keymap.set("n", "<leader>t", ":bel term<CR>", { desc = "Open terminal at bot
 
 -- copy&past improvements
 vim.keymap.set("n", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
-vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set("v", "<leader>y", '"+ygv', { desc = "Copy to system clipboard" })
 vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 vim.keymap.set("v", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 

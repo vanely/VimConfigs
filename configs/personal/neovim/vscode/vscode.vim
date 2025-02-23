@@ -122,7 +122,7 @@ nnoremap <silent> <esc> :noh<CR><esc>
 " Clipboard optimizations
 " Copy to system clipboard
 nnoremap <leader>y "+y
-vnoremap <leader>y "+y
+vnoremap <leader>y "+ygv
 nnoremap <leader>Y "+Y
 
 " Paste from system clipboard
