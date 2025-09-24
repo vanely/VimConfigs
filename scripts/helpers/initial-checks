@@ -87,8 +87,19 @@ install_ripgrep() {
     echo
     if [[ "${OSTYPE}" == "linux-gnu" ]]; then
       # install for linux(ubuntu/debian)
-      sudo apt update -y
-      sudo apt install ripgrep -y
+      if ! sudo apt update -y 2>/dev/null; then
+        echo "Warning: Could not update package list (sudo may be restricted in container)"
+        echo "Skipping ripgrep installation due to permission restrictions"
+        echo "---------------------------------------------"
+        echo
+        return 0
+      fi
+      if ! sudo apt install ripgrep -y 2>/dev/null; then
+        echo "Warning: Could not install ripgrep (sudo may be restricted in container)"
+        echo "---------------------------------------------"
+        echo
+        return 0
+      fi
       echo "---------------------------------------------"
       echo
     elif [[ "${OSTYPE}" == "darwin" ]]; then
@@ -104,13 +115,14 @@ install_ripgrep() {
       source ~/.bashrc
       scoop install ripgrep
       echo "---------------------------------------------"
+    else
       echo "Usupported operating system."
     fi
   fi
 }
 
 install_ack-grep() {
-  if [[ -n "$(which ripgrep)" ]]; then
+  if [[ -n "$(which ack)" ]]; then
     echo "ack-grep is already installed on this machine."
     echo "---------------------------------------------"
     echo
@@ -120,8 +132,19 @@ install_ack-grep() {
     echo
     if [[ "${OSTYPE}" == "linux-gnu" ]]; then
       # install for linux(ubuntu/debian)
-      sudo apt update -y
-      sudo apt install ack-grep -y
+      if ! sudo apt update -y 2>/dev/null; then
+        echo "Warning: Could not update package list (sudo may be restricted in container)"
+        echo "Skipping ack-grep installation due to permission restrictions"
+        echo "---------------------------------------------"
+        echo
+        return 0
+      fi
+      if ! sudo apt install ack-grep -y 2>/dev/null; then
+        echo "Warning: Could not install ack-grep (sudo may be restricted in container)"
+        echo "---------------------------------------------"
+        echo
+        return 0
+      fi
       echo "---------------------------------------------"
       echo
     elif [[ "${OSTYPE}" == "darwin" ]]; then
@@ -297,9 +320,16 @@ install_ctags() {
     brew install ctags
   elif [[ "${OSTYPE}" == "linux-gnu" ]]; then
     echo "Updating package list..."
-    sudo apt-get update -y
+    if ! sudo apt-get update -y 2>/dev/null; then
+      echo "Warning: Could not update package list (sudo may be restricted in container)"
+      echo "Skipping ctags installation due to permission restrictions"
+      return 0
+    fi
     echo "Installing ctags with apt-get..."
-    sudo apt-get install -y ctags
+    if ! sudo apt-get install -y ctags 2>/dev/null; then
+      echo "Warning: Could not install ctags (sudo may be restricted in container)"
+      return 0
+    fi
   elif [[ "${OSTYPE}" == "msys" ]]; then
     install_scoop
     echo "Installing ctags with scoop..."
@@ -372,27 +402,84 @@ install_neovim() {
     echo "Installing Neovim..."
     case "$current_os" in
       "Linux")
-        curl "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz" -o "${HOME}/Downloads/nvim-linux64.tar.gz"
-        sudo tar -xzf "${HOME}/Downloads/nvim-linux64.tar.gz" -C "/usr/local"
-        sudo ln -s "/usr/local/nvim-linux64/bin/nvim" "/usr/local/bin"
-        if [[ -f "${HOME}/.zshrc" ]]; then
-          source "${HOME}/.zshrc"
-        else 
-          source "${HOME}/.bashrc"
+        # Check if Downloads directory exists, create if not
+        mkdir -p "${HOME}/Downloads"
+        
+        echo "Downloading Neovim..."
+        curl -L "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz" -o "${HOME}/Downloads/nvim-linux-x86_64.tar.gz"
+        
+        # Try to install to system location first, fallback to user installation
+        if sudo tar -xzf "${HOME}/Downloads/nvim-linux-x86_64.tar.gz" -C "/usr/local" 2>/dev/null && sudo ln -s "/usr/local/nvim-linux-x86_64/bin/nvim" "/usr/local/bin" 2>/dev/null; then
+          echo "Neovim installed to system location successfully."
+        else
+          echo "Warning: Could not install to system location (sudo may be restricted in container)"
+          echo "Installing Neovim to user directory instead..."
+          
+          # Install to user directory
+          mkdir -p "${HOME}/.local"
+          tar -xzf "${HOME}/Downloads/nvim-linux-x86_64.tar.gz" -C "${HOME}/.local"
+          ln -sf "${HOME}/.local/nvim-linux-x86_64/bin/nvim" "${HOME}/.local/bin/nvim"
+          
+          # Add to PATH if not already there
+          if ! echo "$PATH" | grep -q "${HOME}/.local/bin"; then
+            echo "Adding ${HOME}/.local/bin to PATH..."
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "${HOME}/.bashrc"
+            if [[ -f "${HOME}/.zshrc" ]]; then
+              echo 'export PATH="$HOME/.local/bin:$PATH"' >> "${HOME}/.zshrc"
+            fi
+          fi
+          
+          # Source shell config to update PATH
+          if [[ -f "${HOME}/.zshrc" ]]; then
+            source "${HOME}/.zshrc"
+          else 
+            source "${HOME}/.bashrc"
+          fi
         fi
+        
+        # Clean up download
+        rm -f "${HOME}/Downloads/nvim-linux-x86_64.tar.gz"
         ;;
       "Mac")
         if [[ $(uname -m) == 'arm64' ]]; then
-          brew install neovim
-          curl "https://github.com/neovim/neovim/releases/latest/download/nvim-macos-arm64.tar.gz" -o "${HOME}/Downloads/nvim-macos-arm64.tar.gz"
-          sudo tar -xzf "${HOME}/Downloads/nvim-macos-arm64.tar.gz" -C "/usr/local"
-          sudo ln -s "/usr/local/nvim-macos-arm64/bin/nvim" "/usr/local/bin"
+          if command -v brew >/dev/null 2>&1; then
+            brew install neovim
+          else
+            echo "Homebrew not found, downloading Neovim directly..."
+            mkdir -p "${HOME}/Downloads"
+            curl -L "https://github.com/neovim/neovim/releases/latest/download/nvim-macos-arm64.tar.gz" -o "${HOME}/Downloads/nvim-macos-arm64.tar.gz"
+            
+            if sudo tar -xzf "${HOME}/Downloads/nvim-macos-arm64.tar.gz" -C "/usr/local" 2>/dev/null && sudo ln -s "/usr/local/nvim-macos-arm64/bin/nvim" "/usr/local/bin" 2>/dev/null; then
+              echo "Neovim installed to system location successfully."
+            else
+              echo "Installing Neovim to user directory..."
+              mkdir -p "${HOME}/.local"
+              tar -xzf "${HOME}/Downloads/nvim-macos-arm64.tar.gz" -C "${HOME}/.local"
+              ln -sf "${HOME}/.local/nvim-macos-arm64/bin/nvim" "${HOME}/.local/bin/nvim"
+              echo 'export PATH="$HOME/.local/bin:$PATH"' >> "${HOME}/.zshrc"
+            fi
+            rm -f "${HOME}/Downloads/nvim-macos-arm64.tar.gz"
+          fi
           source_shell_config
         else
-          brew install neovim
-          curl "https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz" -o "${HOME}/Downloads/nvim-macos-x86_64.tar.gz"
-          sudo tar -xzf "${HOME}/Downloads/nvim-macos-x86_64.tar.gz" -C "/usr/local"
-          sudo ln -s "/usr/local/nvim-macos-x86_64/bin/nvim" "/usr/local/bin"
+          if command -v brew >/dev/null 2>&1; then
+            brew install neovim
+          else
+            echo "Homebrew not found, downloading Neovim directly..."
+            mkdir -p "${HOME}/Downloads"
+            curl -L "https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz" -o "${HOME}/Downloads/nvim-macos-x86_64.tar.gz"
+            
+            if sudo tar -xzf "${HOME}/Downloads/nvim-macos-x86_64.tar.gz" -C "/usr/local" 2>/dev/null && sudo ln -s "/usr/local/nvim-macos-x86_64/bin/nvim" "/usr/local/bin" 2>/dev/null; then
+              echo "Neovim installed to system location successfully."
+            else
+              echo "Installing Neovim to user directory..."
+              mkdir -p "${HOME}/.local"
+              tar -xzf "${HOME}/Downloads/nvim-macos-x86_64.tar.gz" -C "${HOME}/.local"
+              ln -sf "${HOME}/.local/nvim-macos-x86_64/bin/nvim" "${HOME}/.local/bin/nvim"
+              echo 'export PATH="$HOME/.local/bin:$PATH"' >> "${HOME}/.zshrc"
+            fi
+            rm -f "${HOME}/Downloads/nvim-macos-x86_64.tar.gz"
+          fi
           source_shell_config
         fi
       ;;

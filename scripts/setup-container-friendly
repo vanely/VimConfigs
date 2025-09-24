@@ -1,0 +1,56 @@
+#!/bin/bash
+
+echo "=== Vim Config Setup Script (Container-Friendly Version) ==="
+echo
+
+EXECUTION_CONTEXT=$(pwd)
+
+# Source helper files without the strict error handling
+echo "Loading helper functions..."
+
+# Temporarily disable strict error handling to prevent early exit
+set +e
+source "${EXECUTION_CONTEXT}/helpers/initial-checks"
+set -e
+
+source "${EXECUTION_CONTEXT}/helpers/choose-text-editor"
+
+echo "Helper functions loaded successfully."
+echo
+
+# Check what's already installed
+echo "Checking installed packages..."
+echo "vim: $(which vim 2>/dev/null || echo 'not installed')"
+echo "nvim: $(which nvim 2>/dev/null || echo 'not installed')"
+echo "ripgrep: $(which rg 2>/dev/null || echo 'not installed')"
+echo "ack: $(which ack 2>/dev/null || echo 'not installed')"
+echo "ctags: $(which ctags 2>/dev/null || echo 'not installed')"
+echo
+
+echo "Note: In container environments, package installation may require different approaches."
+echo "The choose-text-editor functionality will still work for configuration setup."
+echo
+
+# -----------------------Dependencies---------------------
+echo "Attempting to install dependencies..."
+echo "Note: Some installations may fail in container environments."
+
+# Try to install dependencies, but don't fail the entire script if they fail
+set +e
+install_ctags
+install_ripgrep  
+install_ack-grep
+set -e
+
+echo
+echo "Dependencies installation attempt completed."
+echo
+
+# --------------------------------------------------------
+# This is the main functionality - choose text editor
+echo "Now presenting the text editor selection menu:"
+echo "================================================"
+choose_text_editor_to_install
+
+echo
+echo "Setup script completed!"
