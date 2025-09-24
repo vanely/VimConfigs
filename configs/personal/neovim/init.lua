@@ -346,24 +346,24 @@ local plugins = {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.html.setup({ capabilities = capabilities })
-      lspconfig.cssls.setup({ capabilities = capabilities })
-      lspconfig.ast_grep.setup({ capabilities = capabilities })
-      lspconfig.eslint.setup({ capabilities = capabilities })
-      lspconfig.emmet_ls.setup({ capabilities = capabilities })
-      lspconfig.jsonls.setup({ capabilities = capabilities })
-      lspconfig.pyright.setup({ capabilities = capabilities })
-      lspconfig.pylyzer.setup({ capabilities = capabilities })
-      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-      lspconfig.templ.setup({ capabilities = capabilities })
-      lspconfig.dockerls.setup({ capabilities = capabilities })
-      lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
-      lspconfig.yamlls.setup({ capabilities = capabilities })
-      lspconfig.taplo.setup({ capabilities = capabilities })
-      lspconfig.bashls.setup({ capabilities = capabilities })
-      lspconfig.marksman.setup({ capabilities = capabilities })
+      -- local lspconfig = require("lspconfig")
+      vim.lsp.config.lua_ls = { capabilities = capabilities }
+      vim.lsp.config.html = { capabilities = capabilities }
+      vim.lsp.config.cssls = { capabilities = capabilities }
+      vim.lsp.config.ast_grep = { capabilities = capabilities }
+      vim.lsp.config.eslint = { capabilities = capabilities }
+      vim.lsp.config.emmet_ls = { capabilities = capabilities }
+      vim.lsp.config.jsonls = { capabilities = capabilities }
+      vim.lsp.config.pyright = { capabilities = capabilities }
+      vim.lsp.config.pylyzer = { capabilities = capabilities }
+      vim.lsp.config.rust_analyzer = { capabilities = capabilities }
+      vim.lsp.config.templ = { capabilities = capabilities }
+      vim.lsp.config.dockerls = { capabilities = capabilities }
+      vim.lsp.config.docker_compose_language_service = { capabilities = capabilities }
+      vim.lsp.config.yamlls = { capabilities = capabilities }
+      vim.lsp.config.taplo = { capabilities = capabilities }
+      vim.lsp.config.bashls = { capabilities = capabilities }
+      vim.lsp.config.marksman = { capabilities = capabilities }
     end,
   },
   { -- wrapper for LSPs
