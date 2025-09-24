@@ -1,0 +1,417 @@
+{
+    "window.commandCenter": true,
+    "workbench.activityBar.orientation": "vertical",
+    "workbench.colorTheme": "Bearded Theme Monokai Black",
+    "workbench.iconTheme": "catppuccin-latte",
+    "editor.fontSize": 12,
+    "terminal.integrated.fontSize": 12,
+    "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "terminal.external.linuxExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "terminal.integrated.allowChords": false,
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "Ubuntu (WSL)": {
+            "path": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "-d",
+                "Ubuntu"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "window.zoomLevel": 1,
+    "editor.tabSize": 2,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "remote.SSH.remotePlatform": {
+        "coder-vscode--candidate--vanely-santos-take-2": "linux"
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.associations": {
+        "*.html": "html"
+    },
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.foldingStrategy": "auto",
+    "editor.semanticHighlighting.enabled": true,
+    // neovim UI modifier colors
+    "nvim-ui.nvimColorNormal": "#ffc600",
+    "nvim-ui.nvimColorInsert": "#D32F2F",
+    "nvim-ui.nvimColorVisual": "#673AB7",
+    "nvim-ui.nvimColorReplace": "#000",
+    "nvim-ui.nvimColorCustomizationKeys": [
+        "tab.activeBorder",
+        "editorCursor.foreground"
+    ],
+    // neovim configs-----------------------------------------------------------------
+    // https://gist.github.com/rajeakshay/d6ebe2a8ec23055dfd92d884df52aee1
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/local/bin/nvim",
+    "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/vscode/vscode.vim",
+    "keyboard.dispatch": "keyCode",
+    "vscode-neovim.useWSL": true,
+    "vscode-neovim.keybindingsEnabled": true,
+    "vscode-neovim.keyCommandWaitTimeout": 200,
+    // vscode needs to be restarted for compositeKeys to take effect
+    "vscode-neovim.compositeKeys": {
+        // Quick Escape combinations
+        "jj": {
+            "command": "vscode-neovim.escape",
+            "when": "editorTextFocus && neovim.mode == insert"
+        },
+        "jk": {
+            "command": "vscode-neovim.lua",
+            "args": [
+                [
+                    "local code = require('vscode')",
+                    "code.action('vscode-neovim.escape')",
+                    "code.action('workbench.action.files.save')"
+                ]
+            ]
+        }
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.inlineSuggest.suppressSuggestions": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.ignorecase": true,
+    "vim.smartcase": true,
+    "vim.showcmd": true,
+    "vim.showmode": true,
+    "vim.easymotion": false,
+    "vim.highlightedyank.enable": true,
+    "vim.foldfix": true,
+    "editor.autoIndent": "advanced",
+    // "vim.useSystemClipboard": false,
+    // "vim.vimrc.enable": true,
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.normal": "block",
+    "vim.cursorStylePerMode.replace": "underline",
+    "vim.cursorStylePerMode.visual": "block-outline",
+    "vim.cursorStylePerMode.visualblock": "block-outline",
+    "vim.leader": " ",
+    "vim.normalModeKeyBindings": [
+        // File operations
+        {
+            "before": ["<leader>", "w"],
+            "commands": ["workbench.action.files.save"]
+        },
+        {
+            "before": ["<leader>", "q"],
+            "commands": ["workbench.action.closeActiveEditor"]
+        },
+        {
+            "before": ["<leader>", "e"],
+            "commands": ["workbench.action.toggleSidebarVisibility"]
+        },
+        
+        // Function navigation
+        {
+            "before": ["<leader>", "c", "o"],
+            "commands": ["workbench.action.openSettingsJson"]
+        },
+        {
+            "before": ["]", "]"],
+            "commands": ["editor.action.jumpToBracket"]
+        },
+        
+        // Finding and navigation
+        {
+            "before": ["g", "f"],
+            "commands": ["editor.action.goToReferences"]
+        },
+        
+        // Window management
+        {
+            "before": ["<leader>", "v", "s"],
+            "commands": ["workbench.action.splitEditor"]
+        },
+        {
+            "before": ["<leader>", "s", "h"],
+            "commands": ["workbench.action.splitEditorDown"]
+        },
+        
+        // LSP-like functionality
+        {
+            "before": ["K"],
+            "commands": ["editor.action.showHover"]
+        },
+        {
+            "before": ["<leader>", "c", "a"],
+            "commands": ["editor.action.quickFix"]
+        },
+        {
+            "before": ["<leader>", "r", "n"],
+            "commands": ["editor.action.rename"]
+        },
+        
+        // Terminal and panel control
+        {
+            "before": ["<leader>", "t"],
+            "commands": ["workbench.action.terminal.toggleTerminal"]
+        },
+        {
+            "before": ["<leader>", "T"],
+            "commands": ["workbench.action.togglePanel"]
+        },
+        
+        // Buffer navigation
+        {
+            "before": ["<leader>", "l"],
+            "commands": ["workbench.action.nextEditor"]
+        },
+        {
+            "before": ["<leader>", "h"],
+            "commands": ["workbench.action.previousEditor"]
+        },
+        
+        // Quick commenting
+        {
+            "before": ["g", "c"],
+            "commands": ["editor.action.commentLine"]
+        },
+        
+        // Move lines up/down
+        {
+            "before": ["<leader>", "k"],
+            "commands": ["editor.action.moveLinesUpAction"]
+        },
+        {
+            "before": ["<leader>", "j"],
+            "commands": ["editor.action.moveLinesDownAction"]
+        },
+        
+        // Additional useful mappings
+        {
+            "before": ["<leader>", "/"],
+            // "commands": ["workbench.action.findInFiles"]
+            "commands":["actions.find"],
+            "when": "editorFocus || editorIsOpen"
+        },
+        {
+            "before": ["<leader>", "s"],
+            "commands": ["editor.action.formatDocument"]
+        },
+        
+        // Window navigation
+        {
+            "before": ["<C-h>"],
+            "commands": ["workbench.action.navigateLeft"]
+        },
+        {
+            "before": ["<C-j>"],
+            "commands": ["workbench.action.navigateDown"]
+        },
+        {
+            "before": ["<C-k>"],
+            "commands": ["workbench.action.navigateUp"]
+        },
+        {
+            "before": ["<C-l>"],
+            "commands": ["workbench.action.navigateRight"]
+        },
+        
+        // Workbench shortcuts
+        {
+            "before": ["<leader>", "f", "e"],
+            "commands": ["workbench.view.explorer"]
+        },
+        {
+            "before": ["<leader>", "f", "f"],
+            "commands": ["workbench.view.search"]
+        },
+        
+        // Clipboard operations
+        // {
+        //     "before": ["<leader>", "y"],
+        //     "after": ["\"+y"]
+        // },
+        // {
+        //     "before": ["<leader>", "Y"],
+        //     "after": ["\"+Y"]
+        // },
+        // {
+        //     "before": ["<leader>", "p"],
+        //     "after": ["\"+p"]
+        // },
+        // {
+        //     "before": ["<leader>", "P"],
+        //     "after": ["\"+P"]
+        // },
+
+        // Instance selection
+        {
+            "before": ["<leader>", "d"],
+            "commands": ["editor.action.addSelectionToNextFindMatch"],
+            "when": "editorFocus"
+        },
+
+        // Clipboard operations - normal mode
+        {
+            "before": ["<leader>", "y", "y"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "y", "y"] }
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "Y"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "y", "$"] }
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "p"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "p"] }
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "P"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "P"] }
+                }
+            ]
+        },
+        
+        // Copy file path
+        {
+            "before": ["<leader>", "y", "p"],
+            "commands": ["copyFilePath"]
+        },
+        {
+            "before": ["<leader>", "y", "r"],
+            "commands": ["copyRelativeFilePath"]
+        }
+    ],
+    "vim.insertModeKeyBindings": [
+        // Instance Selection
+        {
+            "before": ["<C-d>"],
+            "after": ["<Esc>", "v", "o"]
+        },
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        },
+        {
+            "before": ["j", "k"],
+            "after": ["<Esc>", ":w<CR>"]
+        }        
+    ],
+    "vim.visualModeKeyBindings": [
+        // Quick commenting in visual mode
+        {
+            "before": ["g", "c"],
+            "commands": ["editor.action.commentLine"]
+        },
+        
+        // Move selected lines up/down
+        {
+            "before": ["<leader>", "k"],
+            "commands": ["editor.action.moveLinesUpAction", "vim.mode.normal", "vim.mode.visual"]
+        },
+        {
+            "before": ["<leader>", "j"],
+            "commands": ["editor.action.moveLinesDownAction", "vim.mode.normal", "vim.mode.visual"]
+        },
+        
+        // Clipboard operations
+        // {
+        //     "before": ["<leader>", "y"],
+        //     "after": ["\"+y"]
+        // },
+        // {
+        //     "before": ["<leader>", "p"],
+        //     "after": ["\"+p"]
+        // },
+        // Instance selection
+        {
+            "before": ["<leader>", "d"],
+            "commands": ["editor.action.addSelectionToNextFindMatch"],
+            "when": "editorFocus"
+        },
+        
+        // Clipboard operations - visual mode
+        {
+            "before": ["<leader>", "y"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "y"] }
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "p"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "p"] }
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "P"],
+            "commands": [
+                {
+                    "command": "vim.remap",
+                    "args": { "after": ["\"", "+", "P"] }
+                }
+            ]
+        },
+
+        // Keep selection when indenting
+        {
+            "before": [">"],
+            "commands": ["editor.action.indentLines", "vim.mode.normal", "vim.mode.visual"]
+        },
+        {
+            "before": ["<"],
+            "commands": ["editor.action.outdentLines", "vim.mode.normal", "vim.mode.visual"]
+        }
+    ],
+    "vim.statusBarColors.normal": [
+        "#005f5f",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.insert": [
+        "#5f0000",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.visual": [
+        "#5f00af",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.visualblock": [
+        "#86592d",
+        "#ffffff"
+    ],
+    "github.copilot.nextEditSuggestions.enabled": true
+    // "vim.vimrc.path": "/root/.config/nvim/vscode/.vimrc",
+}
