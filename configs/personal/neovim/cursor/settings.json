@@ -203,6 +203,17 @@
             "commands":["actions.find"],
             "when": "editorFocus || editorIsOpen"
         },
+        // Quick open files
+        {
+            "before": ["<leader>", "o"],
+            "commands": ["workbench.action.quickOpen"],
+            "when": "inFilesPicker && inQuickOpen"
+            // {
+            // "key": "ctrl+shift+p",
+            // "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
+            // "when": "inFilesPicker && inQuickOpen"
+            // }
+        },
         {
             "before": ["<leader>", "s"],
             "commands": ["editor.action.formatDocument"]
@@ -233,7 +244,8 @@
         },
         {
             "before": ["<leader>", "f", "f"],
-            "commands": ["workbench.view.search"]
+            // "commands": ["workbench.view.search"]
+            "commands": ["workbench.action.findInFiles"]
         },
         
         // Clipboard operations
