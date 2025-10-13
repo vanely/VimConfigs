@@ -28,6 +28,11 @@ List of Syntax Themes I like so far:
 * https://draculatheme.com/vim
 * https://github.com/kyoz/purify/tree/master/vim
 
+Theme Lists:
+* https://dotfyle.com/neovim/colorscheme/top
+
+
+
 Turning on developer mode in your Discord account
 Going to the Discord Developer Portal﻿
 Clicking New Application
