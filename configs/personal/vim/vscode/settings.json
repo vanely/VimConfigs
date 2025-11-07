@@ -387,6 +387,6 @@
     "vim.statusBarColors.visualblock": [
         "#86592d",
         "#ffffff"
-    ],
+    ]
     // "vim.vimrc.path": "/root/.config/nvim/vscode/.vimrc",
 }
